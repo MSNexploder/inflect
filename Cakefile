@@ -122,6 +122,7 @@ documentSource = (callback) ->
   exec "docco src/*.coffee src/**/*.coffee", (err, stdout, stderr) ->
     log stdout, green
     onerror err
+    callback()
     #log "Copying to html/source", green
     #exec "mkdir -p html && cp -rf docs/ html/source && rm -rf docs", callback
 
