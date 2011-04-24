@@ -1,0 +1,45 @@
+{
+  "name": "inflect",
+  "description": "A port of the Rails / ActiveSupport inflector to JavaScript.",
+  "keywords": ["inflect", "activerecord", "rails", "activesupport", "string"],
+  "version": "0.1.0",
+  "author": "Stefan Huber <MSNexploder@gmail.com>",
+  "homepage": "https://github.com/MSNexploder/inflect",
+  "main": "lib/inflect",
+  "files": [
+    "Cakefile",
+    "CHANGELOG.md",
+    "doc",
+    "lib",
+    "LICENSE",
+    "README.md",
+    "spec",
+    "src"
+  ],
+  "scripts": {
+    "build": "cake build",
+    "test": "cake test"
+  },
+  "directories": {
+    "doc":"./doc",
+    "lib":"./lib"
+  },
+  "engines": {
+    "node": ">= 0.4.0 < 0.5.0"
+  },
+  "devDependencies": {
+    "coffee-script": ">= 1.0.1 < 2.0.0",
+    "docco": ">= 0.3.0 < 0.4.0",
+    "vows": ">= 0.5.8 < 0.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MSNexploder/inflect.git"
+  },
+  "bugs": { "url": "https://github.com/MSNexploder/inflect/issues" },
+  "licenses": [
+    { "type": "MIT",
+      "url": "https://github.com/MSNexploder/inflect/raw/master/LICENSE"
+    }
+  ]
+}

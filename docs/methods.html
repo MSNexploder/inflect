@@ -1,0 +1,161 @@
+<!DOCTYPE html>  <html> <head>   <title>methods.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="index.html">                 index.coffee               </a>                                           <a class="source" href="default_inflections.html">                 default_inflections.coffee               </a>                                           <a class="source" href="index.html">                 index.coffee               </a>                                           <a class="source" href="inflections.html">                 inflections.coffee               </a>                                           <a class="source" href="methods.html">                 methods.coffee               </a>                                           <a class="source" href="number_extensions.html">                 number_extensions.coffee               </a>                                           <a class="source" href="string_extensions.html">                 string_extensions.coffee               </a>                                           <a class="source" href="version.html">                 version.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               methods.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nv">inflections = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../inflect&#39;</span><span class="p">).</span><span class="nx">inflections</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>By default, <tt>camelize</tt> converts strings to UpperCamelCase. If the argument to <tt>camelize</tt>
+is set to <tt>false</tt> then <tt>camelize</tt> produces lowerCamelCase.</p>
+
+<h3>Examples</h3>
+
+<pre><code>"active_record".camelize()              # =&gt; "ActiveRecord"
+"active_record".camelize(false)         # =&gt; "activeRecord"
+</code></pre>
+
+<p>As a rule of thumb you can think of <tt>camelize</tt> as the inverse of <tt>underscore</tt>,
+though there are cases where that does not hold:</p>
+
+<pre><code>"SSLError".underscore().camelize() # =&gt; "SslError"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">camelize = </span><span class="nf">(lower_case_and_underscored_word, first_letter_in_uppercase = true) -&gt;</span>
+    <span class="nv">rest = </span><span class="nx">lower_case_and_underscored_word</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/_./g</span><span class="p">,</span> <span class="nf">(val) -&gt;</span> <span class="nx">val</span><span class="p">[</span><span class="mi">1</span><span class="p">..</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="nx">toUpperCase</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">first_letter_in_uppercase</span>
+        <span class="nx">lower_case_and_underscored_word</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">+</span> <span class="nx">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">..</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span>
+        <span class="nx">lower_case_and_underscored_word</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">+</span> <span class="nx">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">..</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Makes an underscored, lowercase form from the expression in the string.</p>
+
+<h3>Examples</h3>
+
+<pre><code>"ActiveRecord".underscore()         # =&gt; "active_record"
+</code></pre>
+
+<p>As a rule of thumb you can think of <tt>underscore</tt> as the inverse of <tt>camelize</tt>,
+though there are cases where that does not hold:</p>
+
+<pre><code>"SSLError".underscore().camelize() # =&gt; "SslError"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">underscore = </span><span class="nf">(camel_cased_word) -&gt;</span>
+    <span class="nv">word = </span><span class="nx">camel_cased_word</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+    <span class="nv">word = </span><span class="nx">word</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([A-Z]+)([A-Z][a-z])/g</span><span class="p">,</span><span class="s1">&#39;$1_$2&#39;</span><span class="p">)</span>
+    <span class="nv">word = </span><span class="nx">word</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([a-z\d])([A-Z])/g</span><span class="p">,</span><span class="s1">&#39;$1_$2&#39;</span><span class="p">)</span>
+    <span class="nv">word = </span><span class="nx">word</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/-/g</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+    <span class="nv">word = </span><span class="nx">word</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+    <span class="nx">word</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Replaces underscores with dashes in the string.</p>
+
+<h3>Examples</h3>
+
+<pre><code>"puni_puni" # =&gt; "puni-puni"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">dasherize = </span><span class="nf">(underscored_word) -&gt;</span>
+    <span class="nx">underscored_word</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/_/g</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Capitalizes all the words and replaces some characters in the string to create
+a nicer looking title. <tt>titleize</tt> is meant for creating pretty output.</p>
+
+<h3>Examples</h3>
+
+<pre><code>"man from the boondocks".titleize() # =&gt; "Man From The Boondocks"
+"x-men: the last stand".titleize()  # =&gt; "X Men: The Last Stand"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">titleize = </span><span class="nf">(word) -&gt;</span>
+    <span class="nx">humanize</span><span class="p">(</span><span class="nx">underscore</span><span class="p">(</span><span class="nx">word</span><span class="p">)).</span><span class="nx">replace</span> <span class="sr">/\b(&#39;?[a-z])/g</span><span class="p">,</span> <span class="nf">(val) -&gt;</span> <span class="nx">capitalize</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Converts the first character to uppercase and the remainder to lowercase.</p>
+
+<h3>Examples</h3>
+
+<pre><code>'über'.capitalize() # =&gt; "Über"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">capitalize = </span><span class="nf">(word) -&gt;</span>
+    <span class="p">(</span><span class="nx">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">).</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="nx">word</span><span class="p">[</span><span class="mi">1</span><span class="p">..</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Returns the plural form of the word in the string.</p>
+
+<h3>Examples</h3>
+
+<pre><code>"post".pluralize()             # =&gt; "posts"
+"octopus".pluralize()          # =&gt; "octopi"
+"sheep".pluralize()            # =&gt; "sheep"
+"words".pluralize()            # =&gt; "words"
+"CamelOctopus".pluralize()     # =&gt; "CamelOctopi"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">pluralize = </span><span class="nf">(word) -&gt;</span>
+    <span class="nv">result = </span><span class="nx">word</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nx">word</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">inflections</span><span class="p">().</span><span class="nx">uncountables</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="nx">result</span>
+    <span class="k">else</span>
+        <span class="k">for</span> <span class="nx">plural</span> <span class="k">in</span> <span class="nx">inflections</span><span class="p">().</span><span class="nx">plurals</span>
+            <span class="nv">rule = </span><span class="nx">plural</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="nv">replacement = </span><span class="nx">plural</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nx">result</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">rule</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="nv">result = </span><span class="nx">result</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">rule</span><span class="p">,</span> <span class="nx">replacement</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="nx">result</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>The reverse of <tt>pluralize</tt>, returns the singular form of a word in a string.</p>
+
+<h3>Examples</h3>
+
+<pre><code>"posts".singularize()            # =&gt; "post"
+"octopi".singularize()           # =&gt; "octopus"
+"sheep".singularize()            # =&gt; "sheep"
+"word".singularize()             # =&gt; "word"
+"CamelOctopi".singularize()      # =&gt; "CamelOctopus"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">singularize = </span><span class="nf">(word) -&gt;</span>
+    <span class="nv">result = </span><span class="nx">word</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+
+    <span class="nv">uncountable = </span><span class="kc">false</span>
+    <span class="k">for</span> <span class="nx">inflection</span> <span class="k">in</span> <span class="nx">inflections</span><span class="p">().</span><span class="nx">uncountables</span>
+        <span class="k">if</span> <span class="nx">result</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;\\b#{inflection}$&quot;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">))</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="nv">uncountable = </span><span class="kc">true</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="nx">word</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">uncountable</span>
+        <span class="nx">result</span>
+    <span class="k">else</span>
+        <span class="k">for</span> <span class="nx">singular</span> <span class="k">in</span> <span class="nx">inflections</span><span class="p">().</span><span class="nx">singulars</span>
+            <span class="nv">rule = </span><span class="nx">singular</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="nv">replacement = </span><span class="nx">singular</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nx">result</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">rule</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="nv">result = </span><span class="nx">result</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">rule</span><span class="p">,</span> <span class="nx">replacement</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="nx">result</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Capitalizes the first word and turns underscores into spaces and strips a
+trailing "_id", if any. Like <tt>titleize</tt>, this is meant for creating pretty output.</p>
+
+<h3>Examples</h3>
+
+<pre><code>"employee_salary" # =&gt; "Employee salary"
+"author_id"       # =&gt; "Author"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">humanize = </span><span class="nf">(lower_case_and_underscored_word) -&gt;</span>
+    <span class="nv">result = </span><span class="nx">lower_case_and_underscored_word</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="nx">human</span> <span class="k">in</span> <span class="nx">inflections</span><span class="p">().</span><span class="nx">humans</span>
+        <span class="nv">rule = </span><span class="nx">human</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nv">replacement = </span><span class="nx">human</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nx">result</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">rule</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="nv">result = </span><span class="nx">result</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">rule</span><span class="p">,</span> <span class="nx">replacement</span><span class="p">)</span>
+            <span class="k">break</span>
+
+    <span class="nx">capitalize</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/_id$/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/_/g</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">))</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Turns a number into an ordinal string used to denote the position in an
+ordered sequence such as 1st, 2nd, 3rd, 4th.</p>
+
+<h3>Examples</h3>
+
+<pre><code>ordinalize(1)     # =&gt; "1st"
+ordinalize(2)     # =&gt; "2nd"
+ordinalize(1002)  # =&gt; "1002nd"
+ordinalize(1003)  # =&gt; "1003rd"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">ordinalize = </span><span class="nf">(number) -&gt;</span>
+    <span class="nv">number_int = </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">number</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">[</span><span class="mi">11</span><span class="p">..</span><span class="mi">13</span><span class="p">].</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">number_int</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="s2">&quot;#{number}th&quot;</span>
+    <span class="k">else</span>
+        <span class="k">switch</span> <span class="nx">number_int</span> <span class="o">%</span> <span class="mi">10</span>
+            <span class="k">when</span> <span class="mi">1</span> <span class="k">then</span> <span class="s2">&quot;#{number}st&quot;</span>
+            <span class="k">when</span> <span class="mi">2</span> <span class="k">then</span> <span class="s2">&quot;#{number}nd&quot;</span>
+            <span class="k">when</span> <span class="mi">3</span> <span class="k">then</span> <span class="s2">&quot;#{number}rd&quot;</span>
+            <span class="k">else</span> <span class="s2">&quot;#{number}th&quot;</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Replaces special characters in a string so that it may be used as part of a 'pretty' URL.</p>
+
+<h3>Examples</h3>
+
+<pre><code>parameterize("Donald E. Knuth")         # =&gt; "donald-e-knuth"
+parameterize("Donald E. Knuth", '_')     # =&gt; "donald_e_knuth"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">parameterize = </span><span class="nf">(string, sep = &#39;-&#39;) -&gt;</span>
+    <span class="nv">parameterized_string = </span><span class="nx">string</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Turn unwanted chars into the separator</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">parameterized_string = </span><span class="nx">parameterized_string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[^a-z0-9\-_]+/gi</span><span class="p">,</span> <span class="nx">sep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">sep</span><span class="o">?</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>No more than one of the separator in a row.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nv">parameterized_string = </span><span class="nx">parameterized_string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;#{sep}{2,}&quot;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">),</span> <span class="nx">sep</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Remove leading/trailing separator.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nv">parameterized_string = </span><span class="nx">parameterized_string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;^#{sep}|#{sep}$&quot;</span><span class="p">,</span> <span class="s1">&#39;gi&#39;</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="nx">parameterized_string</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+
+<span class="nv">exports.camelize = </span><span class="nx">camelize</span>
+<span class="nv">exports.underscore = </span><span class="nx">underscore</span>
+<span class="nv">exports.dasherize = </span><span class="nx">dasherize</span>
+<span class="nv">exports.titleize = </span><span class="nx">titleize</span>
+<span class="nv">exports.capitalize = </span><span class="nx">capitalize</span>
+<span class="nv">exports.pluralize = </span><span class="nx">pluralize</span>
+<span class="nv">exports.singularize = </span><span class="nx">singularize</span>
+<span class="nv">exports.humanize = </span><span class="nx">humanize</span>
+<span class="nv">exports.ordinalize = </span><span class="nx">ordinalize</span>
+<span class="nv">exports.parameterize = </span><span class="nx">parameterize</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
