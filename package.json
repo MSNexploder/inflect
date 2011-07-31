@@ -2,7 +2,7 @@
   "name": "inflect",
   "description": "A port of the Rails / ActiveSupport inflector to JavaScript.",
   "keywords": ["inflect", "activerecord", "rails", "activesupport", "string"],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Stefan Huber <MSNexploder@gmail.com>",
   "homepage": "https://github.com/MSNexploder/inflect",
   "main": "lib/inflect",
