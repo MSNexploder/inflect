@@ -68,6 +68,7 @@ inflect.inflections (inflect) ->
     inflect.irregular('theirs', 'theirs')
     inflect.irregular('sex', 'sexes')
     inflect.irregular('cow', 'kine')
+    inflect.irregular('zombie', 'zombies')
 
     inflect.uncountable('advice', 'energy', 'excretion', 'digestion', 'cooperation', 'health', 'justice', 'jeans')
     inflect.uncountable('labour', 'machinery', 'equipment', 'information', 'pollution', 'sewage', 'paper', 'money')
