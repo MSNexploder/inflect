@@ -119,7 +119,7 @@ task "test", "Run all tests", ->
 
 documentSource = (callback) ->
   log "Documenting source files ...", green
-  exec "docco src/*.coffee src/**/*.coffee", (err, stdout, stderr) ->
+  exec "docco src/inflect/*.coffee", (err, stdout, stderr) ->
     log stdout, green
     onerror err
     callback()
