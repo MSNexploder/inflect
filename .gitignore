@@ -1,4 +1,6 @@
+.DS_Store
 .npm
-build
-html
-lib
+node_modules/
+build/
+html/
+lib/
