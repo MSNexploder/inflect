@@ -23,9 +23,18 @@
 <span class="nv">exports.singularize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">singularize</span>
 <span class="nv">exports.humanize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">humanize</span>
 <span class="nv">exports.ordinalize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">ordinalize</span>
-<span class="nv">exports.parameterize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">parameterize</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>object extensions</p>
+<span class="nv">exports.parameterize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">parameterize</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Base object extensions</p>
 
-<p>Only enable them if you know what you are doing</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">string_extensions = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./string_extensions&#39;</span><span class="p">)</span>
+<p>These methods can be used to extend the built-in String and Number classes
+with additional convenience methods.</p>
+
+<h3>Examples</h3>
+
+<pre><code>1.ordinalize()          # =&gt; "1st"
+"post".pluralize()      # =&gt; "posts"
+</code></pre>
+
+<p>They extend Base objects - so use with care and only enable them if you knwo what you are doing.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">string_extensions = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./string_extensions&#39;</span><span class="p">)</span>
 <span class="nv">number_extensions = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./number_extensions&#39;</span><span class="p">)</span>
 <span class="nv">exports.enableStringExtensions = </span><span class="nx">string_extensions</span><span class="p">.</span><span class="nx">enableStringExtensions</span>
 <span class="nv">exports.enableNumberExtensions = </span><span class="nx">number_extensions</span><span class="p">.</span><span class="nx">enableNumberExtensions</span>
