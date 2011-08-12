@@ -4,7 +4,7 @@
   "keywords": ["inflect", "activerecord", "rails", "activesupport", "string"],
   "version": "0.1.3",
   "author": "Stefan Huber <MSNexploder@gmail.com>",
-  "homepage": "https://github.com/MSNexploder/inflect",
+  "homepage": "http://msnexploder.github.com/inflect/",
   "main": "lib/inflect",
   "files": [
     "Cakefile",
