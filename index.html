@@ -50,7 +50,29 @@
     </div>
 
     <h2>Install</h2>
-<p>npm install inflect</p>
+<p><pre>$ npm install inflect</pre></p>
+<h2>Examples</h2>
+<p>
+  <pre>
+  inflect.pluralize('user'); // users
+
+  inflect.singularize('users'); // user
+
+  inflect.camelize('users_controller'); // UsersController
+
+  inflect.capitalize('user'); // User
+
+  inflect.titleize('man from the boondocks'); // Man From The Boondocks
+
+  inflect.underscore('UsersController'); // users_controller
+
+  inflect.dasherize('puni_puni'); // puni-puni
+
+  inflect.parameterize('Donald E. Knuth'); // donald-e-knuth
+
+  inflect.humanize('employee_salary'); // Employee salary
+  </pre>
+</p>
 <h2>Documentation</h2>
 <p><a href="source/index.html">Annotated source</a></p>
 <h2>License</h2>
