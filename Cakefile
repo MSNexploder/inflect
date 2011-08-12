@@ -63,7 +63,7 @@ task "watch", "Continously compile CoffeeScript to JavaScript", ->
 
 
 clean = (callback) ->
-  exec "rm -rf html lib", callback
+  exec "rm -rf html lib docs", callback
 task "clean", "Remove temporary files and such", -> clean onerror
 
 
