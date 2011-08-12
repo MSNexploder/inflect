@@ -30,9 +30,16 @@ exports.humanize = methods.humanize
 exports.ordinalize = methods.ordinalize
 exports.parameterize = methods.parameterize
 
-# object extensions
+# Base object extensions
 #
-# Only enable them if you know what you are doing
+# These methods can be used to extend the built-in String and Number classes
+# with additional convenience methods.
+#
+# ### Examples
+#     1.ordinalize()          # => "1st"
+#     "post".pluralize()      # => "posts"
+#
+# They extend Base objects - so use with care and only enable them if you knwo what you are doing.
 string_extensions = require('./string_extensions')
 number_extensions = require('./number_extensions')
 exports.enableStringExtensions = string_extensions.enableStringExtensions
