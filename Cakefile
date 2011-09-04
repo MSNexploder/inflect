@@ -41,12 +41,10 @@ task "setup", "Install development dependencies", ->
 task "install", "Install inflect in your local repository", ->
   build (err) ->
     onerror err
-    generateMan (err) ->
+    log "Installing inflect ...", green
+    exec "npm install", (err, stdout, stderr) ->
+      process.stdout.write stderr
       onerror err
-      log "Installing inflect ...", green
-      exec "npm install", (err, stdout, stderr) ->
-        process.stdout.write stderr
-        onerror err
 
 
 ## Building ##
