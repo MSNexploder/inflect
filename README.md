@@ -4,7 +4,7 @@
 
 ## Documentation
 
-[Documentation](https://github.com/MSNexploder/inflect/tree/master/docs)
+[Documentation](http://msnexploder.github.com/inflect)
 
 ## Usage
 
