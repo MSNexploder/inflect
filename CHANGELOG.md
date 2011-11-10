@@ -1,3 +1,7 @@
+## 0.1.4 (10th November, 2011)
+
+  * node 0.6.0 compatibility
+
 ## 0.1.3 (11th August, 2011)
 
   * fixed package to include already compiled javascript files
