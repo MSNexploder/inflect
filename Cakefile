@@ -185,19 +185,19 @@ task "publish", "Publish new version (Git, NPM, site)", ->
     # scratch, don't want generated files we no longer use, etc.
     clean (err) ->
       onerror err
-      exec "git push", (err) ->
+      build (err) ->
         onerror err
-        fs.readFile "package.json", "utf8", (err, package) ->
-          package = JSON.parse(package)
+        exec "git push", (err) ->
+          onerror err
+          fs.readFile "package.json", "utf8", (err, package) ->
+            package = JSON.parse(package)
 
-          # Publish documentation, need these first to generate man pages,
-          # inclusion on NPM package.
-          generateDocs (err) ->
-            onerror err
-
-            log "Publishing to NPM ...", green
-            build (err) ->
+            # Publish documentation, need these first to generate man pages,
+            # inclusion on NPM package.
+            generateDocs (err) ->
               onerror err
+
+              log "Publishing to NPM ...", green
               exec "npm publish", (err, stdout, stderr) ->
                 log stdout, green
                 onerror err
