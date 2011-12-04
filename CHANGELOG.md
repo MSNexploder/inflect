@@ -1,3 +1,7 @@
+## 0.2.0 (10th November, 2011)
+
+  * client side support
+
 ## 0.1.4 (10th November, 2011)
 
   * node 0.6.0 compatibility

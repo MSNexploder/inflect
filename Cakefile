@@ -36,7 +36,7 @@ task "setup", "Install development dependencies", ->
     log "Need development dependencies, installing ...", green
     for name, version of JSON.parse(package).devDependencies
       log "Installing #{name} #{version}", green
-      exec "npm bundle install \"#{name}@#{version}\"", onerror
+      exec "npm install \"#{name}@#{version}\"", onerror
 
 task "install", "Install inflect in your local repository", ->
   build (err) ->
