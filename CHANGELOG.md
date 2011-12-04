@@ -1,4 +1,4 @@
-## 0.2.0 (10th November, 2011)
+## 0.2.0 (unreleased)
 
   * client side support
 
