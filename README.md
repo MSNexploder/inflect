@@ -2,6 +2,10 @@
 
     npm install inflect
 
+[Client version](https://raw.github.com/MSNexploder/inflect/master/client/inflect.js)
+
+[Client version (minified)](https://raw.github.com/MSNexploder/inflect/master/client/inflect.min.js)
+
 ## Documentation
 
 [Documentation](http://msnexploder.github.com/inflect)
