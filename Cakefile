@@ -51,13 +51,34 @@ task "install", "Install inflect in your local repository", ->
 
 build = (callback) ->
   log "Compiling CoffeeScript to JavaScript ...", green
-  exec "rm -rf lib && coffee -c -l -b -o lib src", callback
+  exec "rm -rf lib && coffee -c -l -b -o lib src", ->
+    log "Building client side script ...", green
+    data_plain = "window.inflect = require('./inflect');"
+    buildClient 'inflect', data_plain, callback
 task "build", "Compile CoffeeScript to JavaScript", -> build onerror
 
 task "watch", "Continously compile CoffeeScript to JavaScript", ->
   cmd = spawn("coffee", ["-c", "-l", "-b", "-w", "-o", "lib", "src"])
   cmd.stdout.on "data", (data) -> process.stdout.write green + data + reset
   cmd.on "error", onerror
+
+buildClient = (name, data, callback) ->
+  browserify = require('browserify')
+  fileify = require('fileify')
+  jsp = require("uglify-js").parser
+  pro = require("uglify-js").uglify
+
+  b = browserify()
+  b.use fileify('files', __dirname, (file) -> file == path.join(__dirname, 'package.json'))
+  b.addEntry path.join(__dirname, 'src/index.coffee')
+  b.append data
+
+  fs.writeFile "client/#{name}.js", b.bundle(), ->
+    ast = jsp.parse b.bundle()
+    ast = pro.ast_mangle ast
+    ast = pro.ast_squeeze ast
+
+    fs.writeFile "client/#{name}.min.js", pro.gen_code(ast), callback
 
 
 clean = (callback) ->
@@ -69,13 +90,18 @@ task "clean", "Remove temporary files and such", -> clean onerror
 
 runTests = (callback) ->
   log "Running test suite ...", green
-  exec "find spec -name '*-spec.coffee' -print | xargs vows", (err, stdout, stderr) ->
+  exec "vows spec/*-spec.coffee", (err, stdout, stderr) ->
     process.stdout.write stdout
     process.stderr.write stderr
     callback err if callback
 task "test", "Run all tests", ->
   runTests (err) ->
     process.stdout.on "drain", -> process.exit -1 if err
+
+task "test:client", "Run client tests", ->
+  build ->
+    log "Opening client tests in browser ...", green
+    exec "open spec/client/index.html"
 
 
 ## Documentation ##
