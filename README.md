@@ -1,3 +1,7 @@
+# Inflect [![Build Status](https://secure.travis-ci.org/MSNexploder/inflect.png)](http://travis-ci.org/MSNexploder/inflect)
+
+A port of the Rails / ActiveSupport inflector to JavaScript (node.js and browser compatible).
+
 ## Install
 
     npm install inflect
