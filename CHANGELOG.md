@@ -1,3 +1,8 @@
+## 0.2.1 (19th March, 2012)
+
+  * fixed future node compatibility
+  * updated dependencies
+
 ## 0.2.0 (4th December, 2011)
 
   * client side support
