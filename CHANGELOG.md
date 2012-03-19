@@ -1,3 +1,7 @@
+## 0.2.2 (19th March, 2012)
+
+  * node 0.7 compatibility
+
 ## 0.2.1 (19th March, 2012)
 
   * fixed future node compatibility
