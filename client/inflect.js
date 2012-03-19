@@ -26,7 +26,8 @@ require.resolve = (function () {
         
         if (require._core[x]) return x;
         var path = require.modules.path();
-        var y = cwd || '.';
+        cwd = path.resolve('/', cwd);
+        var y = cwd || '/';
         
         if (x.match(/^(?:\.\.?\/|\/)/)) {
             var m = loadAsFileSync(path.resolve(y, x))
@@ -115,7 +116,11 @@ require.alias = function (from, to) {
     }
     var basedir = path.dirname(res);
     
-    var keys = Object_keys(require.modules);
+    var keys = (Object.keys || function (obj) {
+        var res = [];
+        for (var key in obj) res.push(key)
+        return res;
+    })(require.modules);
     
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
@@ -160,17 +165,34 @@ require.define = function (filename, fn) {
     };
 };
 
-var Object_keys = Object.keys || function (obj) {
-    var res = [];
-    for (var key in obj) res.push(key)
-    return res;
-};
-
 if (typeof process === 'undefined') process = {};
 
-if (!process.nextTick) process.nextTick = function (fn) {
-    setTimeout(fn, 0);
-};
+if (!process.nextTick) process.nextTick = (function () {
+    var queue = [];
+    var canPost = typeof window !== 'undefined'
+        && window.postMessage && window.addEventListener
+    ;
+    
+    if (canPost) {
+        window.addEventListener('message', function (ev) {
+            if (ev.source === window && ev.data === 'browserify-tick') {
+                ev.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+    }
+    
+    return function (fn) {
+        if (canPost) {
+            queue.push(fn);
+            window.postMessage('browserify-tick', '*');
+        }
+        else setTimeout(fn, 0);
+    };
+})();
 
 if (!process.title) process.title = 'browser';
 
@@ -182,7 +204,7 @@ if (!process.binding) process.binding = function (name) {
 if (!process.cwd) process.cwd = function () { return '.' };
 
 require.define("path", function (require, module, exports, __dirname, __filename) {
-    function filter (xs, fn) {
+function filter (xs, fn) {
     var res = [];
     for (var i = 0; i < xs.length; i++) {
         if (fn(xs[i], i, xs)) res.push(xs[i]);
@@ -320,12 +342,12 @@ exports.extname = function(path) {
 });
 
 require.define("/node_modules/files", function (require, module, exports, __dirname, __filename) {
-    module.exports = {"package.json":"{\n  \"name\": \"inflect\",\n  \"description\": \"A port of the Rails / ActiveSupport inflector to JavaScript.\",\n  \"keywords\": [\"inflect\", \"activerecord\", \"rails\", \"activesupport\", \"string\"],\n  \"version\": \"0.2.0\",\n  \"author\": \"Stefan Huber <MSNexploder@gmail.com>\",\n  \"homepage\": \"http://msnexploder.github.com/inflect/\",\n  \"main\": \"lib/inflect\",\n  \"files\": [\n    \"Cakefile\",\n    \"CHANGELOG.md\",\n    \"doc\",\n    \"lib\",\n    \"LICENSE\",\n    \"README.md\",\n    \"spec\",\n    \"src\"\n  ],\n  \"scripts\": {\n    \"test\": \"cake test\"\n  },\n  \"directories\": {\n    \"doc\":\"./doc\",\n    \"lib\":\"./lib\"\n  },\n  \"engines\": {\n    \"node\": \">= 0.4.x <= 0.6.x\"\n  },\n  \"devDependencies\": {\n    \"coffee-script\": \">= 1.1.2 < 2.0.0\",\n    \"docco\": \">= 0.3.0 < 0.4.0\",\n    \"vows\": \">= 0.6.0 < 0.7.0\",\n    \"browserify\": \">= 1.8.1 < 1.9.0\",\n    \"fileify\": \">= 0.3.1 < 0.4.0\",\n    \"uglify-js\": \">= 1.1.1 < 1.2.0\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/MSNexploder/inflect.git\"\n  },\n  \"bugs\": { \"url\": \"https://github.com/MSNexploder/inflect/issues\" },\n  \"licenses\": [\n    { \"type\": \"MIT\",\n      \"url\": \"https://github.com/MSNexploder/inflect/raw/master/LICENSE\"\n    }\n  ]\n}"}
+module.exports = {"package.json":"{\n  \"name\": \"inflect\",\n  \"description\": \"A port of the Rails / ActiveSupport inflector to JavaScript.\",\n  \"keywords\": [\"inflect\", \"activerecord\", \"rails\", \"activesupport\", \"string\"],\n  \"version\": \"0.2.0\",\n  \"author\": \"Stefan Huber <MSNexploder@gmail.com>\",\n  \"homepage\": \"http://msnexploder.github.com/inflect/\",\n  \"main\": \"lib/inflect\",\n  \"files\": [\n    \"Cakefile\",\n    \"CHANGELOG.md\",\n    \"doc\",\n    \"lib\",\n    \"LICENSE\",\n    \"README.md\",\n    \"spec\",\n    \"src\"\n  ],\n  \"scripts\": {\n    \"test\": \"cake test\"\n  },\n  \"directories\": {\n    \"doc\":\"./doc\",\n    \"lib\":\"./lib\"\n  },\n  \"engines\": {\n    \"node\": \">= 0.4 <= 0.6\"\n  },\n  \"devDependencies\": {\n    \"coffee-script\": \">= 1.2.0 < 2.0.0\",\n    \"docco\": \">= 0.3.0 < 0.4.0\",\n    \"vows\": \">= 0.6.2 < 0.7.0\",\n    \"browserify\": \">= 1.10.4 < 1.11.0\",\n    \"fileify\": \">= 0.3.1 < 0.4.0\",\n    \"uglify-js\": \">= 1.2.6 < 1.3.0\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/MSNexploder/inflect.git\"\n  },\n  \"bugs\": { \"url\": \"https://github.com/MSNexploder/inflect/issues\" },\n  \"licenses\": [\n    { \"type\": \"MIT\",\n      \"url\": \"https://github.com/MSNexploder/inflect/raw/master/LICENSE\"\n    }\n  ]\n}"}
 
 });
 
 require.define("/inflect/index.coffee", function (require, module, exports, __dirname, __filename) {
-    (function() {
+(function() {
   var Inflections, inflections, methods, number_extensions, string_extensions, version;
 
   version = require('./version');
@@ -387,7 +409,7 @@ require.define("/inflect/index.coffee", function (require, module, exports, __di
 });
 
 require.define("/inflect/version.coffee", function (require, module, exports, __dirname, __filename) {
-    (function() {
+(function() {
   var data, path;
 
   path = require('path');
@@ -407,12 +429,12 @@ require.define("/inflect/version.coffee", function (require, module, exports, __
 });
 
 require.define("fs", function (require, module, exports, __dirname, __filename) {
-    // nothing to see here... no file methods for the browser
+// nothing to see here... no file methods for the browser
 
 });
 
 require.define("/inflect/inflections.coffee", function (require, module, exports, __dirname, __filename) {
-    (function() {
+(function() {
   var Inflections;
   var __slice = Array.prototype.slice;
 
@@ -506,7 +528,7 @@ require.define("/inflect/inflections.coffee", function (require, module, exports
 });
 
 require.define("/inflect/methods.coffee", function (require, module, exports, __dirname, __filename) {
-    (function() {
+(function() {
   var camelize, capitalize, dasherize, humanize, inflections, ordinalize, parameterize, pluralize, singularize, titleize, underscore;
 
   inflections = require('../inflect').inflections;
@@ -669,7 +691,7 @@ require.define("/inflect/methods.coffee", function (require, module, exports, __
 });
 
 require.define("/inflect/string_extensions.coffee", function (require, module, exports, __dirname, __filename) {
-    (function() {
+(function() {
   var enableStringExtensions, inflect;
 
   inflect = require('../inflect');
@@ -713,7 +735,7 @@ require.define("/inflect/string_extensions.coffee", function (require, module, e
 });
 
 require.define("/inflect/number_extensions.coffee", function (require, module, exports, __dirname, __filename) {
-    (function() {
+(function() {
   var enableNumberExtensions, inflect;
 
   inflect = require('../inflect');
@@ -731,7 +753,7 @@ require.define("/inflect/number_extensions.coffee", function (require, module, e
 });
 
 require.define("/inflect/default_inflections.coffee", function (require, module, exports, __dirname, __filename) {
-    (function() {
+(function() {
   var inflect;
 
   inflect = require('../inflect');

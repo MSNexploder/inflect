@@ -94,6 +94,7 @@ runTests = (callback) ->
     process.stdout.write stdout
     process.stderr.write stderr
     callback err if callback
+
 task "test", "Run all tests", ->
   runTests (err) ->
     process.stdout.on "drain", -> process.exit -1 if err
