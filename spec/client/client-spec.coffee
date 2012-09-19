@@ -30,6 +30,15 @@ test 'uncountable word is not greedy', ->
 
     inflect.inflections().uncountables = cached_uncountables
 
+test 'capitalize', ->
+    equal(inflect.capitalize('USER'), 'User')
+    equal(inflect.capitalize('übercool'), 'Übercool')
+
+test 'decapitalize', ->
+    equal(inflect.decapitalize('SomeMethodName'), 'someMethodName')
+    equal(inflect.decapitalize('Übercool'), 'übercool')
+    equal(inflect.decapitalize('USER'), 'uSER')
+
 test 'pluralize singular', ->
     for singular, plural of inflect_test_cases.singular_to_plural
         equal(inflect.pluralize(singular), plural)
@@ -152,7 +161,7 @@ test 'pluralize of irregularity plural should be the same', ->
         equal(inflect.pluralize(plural), plural)
 
 test 'register string extensions', ->
-    string_extensions = ['pluralize', 'singularize', 'capitalize', 'camelize', 'titleize', 'underscore', 'dasherize', 'parameterize', 'humanize']
+    string_extensions = ['pluralize', 'singularize', 'capitalize', 'decapitalize', 'camelize', 'titleize', 'underscore', 'dasherize', 'parameterize', 'humanize']
     for method in string_extensions
         equal('inflect'[method], undefined)
     inflect.enableStringExtensions()

@@ -24,6 +24,7 @@ exports.underscore = methods.underscore
 exports.dasherize = methods.dasherize
 exports.titleize = methods.titleize
 exports.capitalize = methods.capitalize
+exports.decapitalize = methods.decapitalize
 exports.pluralize = methods.pluralize
 exports.singularize = methods.singularize
 exports.humanize = methods.humanize

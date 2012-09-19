@@ -37,8 +37,13 @@ vows.describe('Inflect').addBatch(
         inflect.inflections().uncountables = cached_uncountables
 
     'capitalize': ->
-        assert.equal(inflect.capitalize('user'), 'User')
+        assert.equal(inflect.capitalize('USER'), 'User')
         assert.equal(inflect.capitalize('übercool'), 'Übercool')
+
+    'decapitalize': ->
+        assert.equal(inflect.decapitalize('SomeMethodName'), 'someMethodName')
+        assert.equal(inflect.decapitalize('Übercool'), 'übercool')
+        assert.equal(inflect.decapitalize('USER'), 'uSER')
 
     'pluralize singular': ->
         for singular, plural of inflect_test_cases.singular_to_plural
@@ -162,7 +167,7 @@ vows.describe('Inflect').addBatch(
             assert.equal(inflect.pluralize(plural), plural)
 
     'register string extensions': ->
-        string_extensions = ['pluralize', 'singularize', 'capitalize', 'camelize', 'titleize', 'underscore', 'dasherize', 'parameterize', 'humanize']
+        string_extensions = ['pluralize', 'singularize', 'capitalize', 'decapitalize', 'camelize', 'titleize', 'underscore', 'dasherize', 'parameterize', 'humanize']
         for method in string_extensions
             assert.equal('inflect'[method], undefined)
         inflect.enableStringExtensions()

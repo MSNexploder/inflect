@@ -58,6 +58,13 @@ titleize = (word) ->
 capitalize = (word) ->
     (word[0] || '').toUpperCase() + (word[1..-1] || '').toLowerCase()
 
+# Converts the first character to lowercase and leaves the remainder intact.
+#
+# ### Examples
+#     'über'.capitalize() # => "Über"
+decapitalize = (word) ->
+    (word[0] || '').toLowerCase() + (word[1..-1] || '')
+
 # Returns the plural form of the word in the string.
 #
 # ### Examples
@@ -166,6 +173,7 @@ exports.underscore = underscore
 exports.dasherize = dasherize
 exports.titleize = titleize
 exports.capitalize = capitalize
+exports.decapitalize = decapitalize
 exports.pluralize = pluralize
 exports.singularize = singularize
 exports.humanize = humanize
