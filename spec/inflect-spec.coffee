@@ -36,6 +36,10 @@ vows.describe('Inflect').addBatch(
 
         inflect.inflections().uncountables = cached_uncountables
 
+    'capitalize': ->
+        assert.equal(inflect.capitalize('user'), 'User')
+        assert.equal(inflect.capitalize('übercool'), 'Übercool')
+
     'pluralize singular': ->
         for singular, plural of inflect_test_cases.singular_to_plural
             assert.equal(inflect.pluralize(singular), plural)
