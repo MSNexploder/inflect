@@ -24,6 +24,8 @@ A port of the Rails / ActiveSupport inflector to JavaScript (node.js and browser
 
     inflect.capitalize('user'); // User
 
+    inflect.decapitalize('User'); // user
+
     inflect.titleize('man from the boondocks'); // Man From The Boondocks
 
     inflect.underscore('UsersController'); // users_controller

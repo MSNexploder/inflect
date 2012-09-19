@@ -44,6 +44,13 @@ enableStringExtensions = ->
     String::capitalize = ->
         inflect.capitalize(this)
 
+    # Converts the first character to lowercase and leaves the remainder intact.
+    #
+    # ### Examples
+    #     'über'.capitalize() # => "Über"
+    String::decapitalize = ->
+        inflect.decapitalize(this)
+
     # Capitalizes all the words and replaces some characters in the string to create
     # a nicer looking title. <tt>titleize</tt> is meant for creating pretty output.
     #
