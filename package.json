@@ -27,12 +27,11 @@
     "node": ">=0.4"
   },
   "devDependencies": {
-    "coffee-script": "~1.2.0",
-    "docco": "~0.3.0",
-    "vows": "~0.6.2",
-    "browserify": "~1.10.4",
-    "fileify": "~0.3.1",
-    "uglify-js": "~1.2.6"
+    "coffee-script": "~1.3.3",
+    "docco": "~0.4.0",
+    "vows": "~0.6.4",
+    "browserify": "~1.16.1",
+    "uglify-js": "~1.3.3"
   },
   "repository": {
     "type": "git",

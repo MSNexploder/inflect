@@ -133,7 +133,6 @@ test_data = {
     "!@#Leading bad characters"           : "leading-bad-characters",
     "Squeeze   separators"                : "squeeze-separators",
     "Test with + sign"                    : "test-with-sign",
-    "Test with malformed utf8 \251"       : "test-with-malformed-utf8"
   }
 
   underscore_to_human: {
@@ -204,7 +203,7 @@ test_data = {
   }
 }
 
-if process.title == 'browser'
+if window?
   window.inflect_test_cases = test_data
 else
   module.exports = test_data

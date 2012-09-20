@@ -1,3 +1,8 @@
+## 0.3.0 (20th September, 2012)
+
+  * added inflect.decapitalize (thanks to ikr)
+  * updated dependencies
+
 ## 0.2.2 (19th March, 2012)
 
   * node 0.7 compatibility

@@ -9,10 +9,10 @@ stdout        = process.stdout
 process.env["PATH"] = "node_modules/.bin:#{process.env["PATH"]}"
 
 # ANSI Terminal Colors.
-bold  = "\033[0;1m"
-red   = "\033[0;31m"
-green = "\033[0;32m"
-reset = "\033[0m"
+bold  = '\x1B[0;1m'
+red   = '\x1B[0;31m'
+green = '\x1B[0;32m'
+reset = '\x1B[0m'
 
 # Log a message with a color.
 log = (message, color, explanation) ->
@@ -29,12 +29,12 @@ onerror = (err) ->
 
 # Setup development dependencies, not part of runtime dependencies.
 task "setup", "Install development dependencies", ->
-  fs.readFile "package.json", "utf8", (err, package) ->
+  fs.readFile "package.json", "utf8", (err, pack) ->
     #log "Need runtime dependencies, installing into node_modules ...", green
     #exec "npm bundle", onerror
 
     log "Need development dependencies, installing ...", green
-    for name, version of JSON.parse(package).devDependencies
+    for name, version of JSON.parse(pack).devDependencies
       log "Installing #{name} #{version}", green
       exec "npm install \"#{name}@#{version}\"", onerror
 
@@ -64,12 +64,10 @@ task "watch", "Continously compile CoffeeScript to JavaScript", ->
 
 buildClient = (name, data, callback) ->
   browserify = require('browserify')
-  fileify = require('fileify')
   jsp = require("uglify-js").parser
   pro = require("uglify-js").uglify
 
   b = browserify()
-  b.use fileify('files', __dirname, (file) -> file == path.join(__dirname, 'package.json'))
   b.addEntry path.join(__dirname, 'src/index.coffee')
   b.append data
 
@@ -190,8 +188,8 @@ task "publish", "Publish new version (Git, NPM, site)", ->
         onerror err
         exec "git push", (err) ->
           onerror err
-          fs.readFile "package.json", "utf8", (err, package) ->
-            package = JSON.parse(package)
+          fs.readFile "package.json", "utf8", (err, pack) ->
+            pack = JSON.parse(pack)
 
             # Publish documentation, need these first to generate man pages,
             # inclusion on NPM package.
@@ -204,8 +202,8 @@ task "publish", "Publish new version (Git, NPM, site)", ->
                 onerror err
 
                 # Create a tag for this version and push changes to Github.
-                log "Tagging v#{package.version} ...", green
-                exec "git tag v#{package.version}", (err, stdout, stderr) ->
+                log "Tagging v#{pack.version} ...", green
+                exec "git tag v#{pack.version}", (err, stdout, stderr) ->
                   log stdout, green
                   exec "git push --tags origin master", (err, stdout, stderr) ->
                     log stdout, green

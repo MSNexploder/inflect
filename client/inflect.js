@@ -1,16 +1,18 @@
-var require = function (file, cwd) {
+(function(){var require = function (file, cwd) {
     var resolved = require.resolve(file, cwd || '/');
     var mod = require.modules[resolved];
     if (!mod) throw new Error(
         'Failed to resolve module ' + file + ', tried ' + resolved
     );
-    var res = mod._cached ? mod._cached : mod();
+    var cached = require.cache[resolved];
+    var res = cached? cached.exports : mod();
     return res;
-}
+};
 
 require.paths = [];
 require.modules = {};
-require.extensions = [".js",".coffee"];
+require.cache = {};
+require.extensions = [".js",".coffee",".json"];
 
 require._core = {
     'assert': true,
@@ -23,37 +25,38 @@ require._core = {
 require.resolve = (function () {
     return function (x, cwd) {
         if (!cwd) cwd = '/';
-
+        
         if (require._core[x]) return x;
         var path = require.modules.path();
         cwd = path.resolve('/', cwd);
         var y = cwd || '/';
-
+        
         if (x.match(/^(?:\.\.?\/|\/)/)) {
             var m = loadAsFileSync(path.resolve(y, x))
                 || loadAsDirectorySync(path.resolve(y, x));
             if (m) return m;
         }
-
+        
         var n = loadNodeModulesSync(x, y);
         if (n) return n;
-
+        
         throw new Error("Cannot find module '" + x + "'");
-
+        
         function loadAsFileSync (x) {
+            x = path.normalize(x);
             if (require.modules[x]) {
                 return x;
             }
-
+            
             for (var i = 0; i < require.extensions.length; i++) {
                 var ext = require.extensions[i];
                 if (require.modules[x + ext]) return x + ext;
             }
         }
-
+        
         function loadAsDirectorySync (x) {
             x = x.replace(/\/+$/, '');
-            var pkgfile = x + '/package.json';
+            var pkgfile = path.normalize(x + '/package.json');
             if (require.modules[pkgfile]) {
                 var pkg = require.modules[pkgfile]();
                 var b = pkg.browserify;
@@ -70,10 +73,10 @@ require.resolve = (function () {
                     if (m) return m;
                 }
             }
-
+            
             return loadAsFileSync(x + '/index');
         }
-
+        
         function loadNodeModulesSync (x, start) {
             var dirs = nodeModulesPathsSync(start);
             for (var i = 0; i < dirs.length; i++) {
@@ -83,23 +86,23 @@ require.resolve = (function () {
                 var n = loadAsDirectorySync(dir + '/' + x);
                 if (n) return n;
             }
-
+            
             var m = loadAsFileSync(x);
             if (m) return m;
         }
-
+        
         function nodeModulesPathsSync (start) {
             var parts;
             if (start === '/') parts = [ '' ];
             else parts = path.normalize(start).split('/');
-
+            
             var dirs = [];
             for (var i = parts.length - 1; i >= 0; i--) {
                 if (parts[i] === 'node_modules') continue;
                 var dir = parts.slice(0, i + 1).join('/') + '/node_modules';
                 dirs.push(dir);
             }
-
+            
             return dirs;
         }
     };
@@ -115,13 +118,13 @@ require.alias = function (from, to) {
         res = require.resolve(from, '/');
     }
     var basedir = path.dirname(res);
-
+    
     var keys = (Object.keys || function (obj) {
         var res = [];
-        for (var key in obj) res.push(key)
+        for (var key in obj) res.push(key);
         return res;
     })(require.modules);
-
+    
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
         if (key.slice(0, basedir.length + 1) === basedir + '/') {
@@ -134,77 +137,66 @@ require.alias = function (from, to) {
     }
 };
 
-require.define = function (filename, fn) {
-    var dirname = require._core[filename]
-        ? ''
-        : require.modules.path().dirname(filename)
-    ;
-
-    var require_ = function (file) {
-        return require(file, dirname)
-    };
-    require_.resolve = function (name) {
-        return require.resolve(name, dirname);
-    };
-    require_.modules = require.modules;
-    require_.define = require.define;
-    var module_ = { exports : {} };
-
-    require.modules[filename] = function () {
-        require.modules[filename]._cached = module_.exports;
-        fn.call(
-            module_.exports,
-            require_,
-            module_,
-            module_.exports,
-            dirname,
-            filename
-        );
-        require.modules[filename]._cached = module_.exports;
-        return module_.exports;
-    };
-};
-
-if (typeof process === 'undefined') process = {};
-
-if (!process.nextTick) process.nextTick = (function () {
-    var queue = [];
-    var canPost = typeof window !== 'undefined'
-        && window.postMessage && window.addEventListener
-    ;
-
-    if (canPost) {
-        window.addEventListener('message', function (ev) {
-            if (ev.source === window && ev.data === 'browserify-tick') {
-                ev.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-    }
-
-    return function (fn) {
-        if (canPost) {
-            queue.push(fn);
-            window.postMessage('browserify-tick', '*');
+(function () {
+    var process = {};
+    var global = typeof window !== 'undefined' ? window : {};
+    var definedProcess = false;
+    
+    require.define = function (filename, fn) {
+        if (!definedProcess && require.modules.__browserify_process) {
+            process = require.modules.__browserify_process();
+            definedProcess = true;
         }
-        else setTimeout(fn, 0);
+        
+        var dirname = require._core[filename]
+            ? ''
+            : require.modules.path().dirname(filename)
+        ;
+        
+        var require_ = function (file) {
+            var requiredModule = require(file, dirname);
+            var cached = require.cache[require.resolve(file, dirname)];
+
+            if (cached && cached.parent === null) {
+                cached.parent = module_;
+            }
+
+            return requiredModule;
+        };
+        require_.resolve = function (name) {
+            return require.resolve(name, dirname);
+        };
+        require_.modules = require.modules;
+        require_.define = require.define;
+        require_.cache = require.cache;
+        var module_ = {
+            id : filename,
+            filename: filename,
+            exports : {},
+            loaded : false,
+            parent: null
+        };
+        
+        require.modules[filename] = function () {
+            require.cache[filename] = module_;
+            fn.call(
+                module_.exports,
+                require_,
+                module_,
+                module_.exports,
+                dirname,
+                filename,
+                process,
+                global
+            );
+            module_.loaded = true;
+            return module_.exports;
+        };
     };
 })();
 
-if (!process.title) process.title = 'browser';
 
-if (!process.binding) process.binding = function (name) {
-    if (name === 'evals') return require('vm')
-    else throw new Error('No such module')
-};
-
-if (!process.cwd) process.cwd = function () { return '.' };
-
-require.define("path", function (require, module, exports, __dirname, __filename) {
-function filter (xs, fn) {
+require.define("path",function(require,module,exports,__dirname,__filename,process,global){function filter (xs, fn) {
     var res = [];
     for (var i = 0; i < xs.length; i++) {
         if (fn(xs[i], i, xs)) res.push(xs[i]);
@@ -294,7 +286,7 @@ path = normalizeArray(filter(path.split('/'), function(p) {
   if (path && trailingSlash) {
     path += '/';
   }
-
+  
   return (isAbsolute ? '/' : '') + path;
 };
 
@@ -341,25 +333,73 @@ exports.extname = function(path) {
 
 });
 
-require.define("/node_modules/files", function (require, module, exports, __dirname, __filename) {
-module.exports = {"package.json":"{\n  \"name\": \"inflect\",\n  \"description\": \"A port of the Rails / ActiveSupport inflector to JavaScript.\",\n  \"keywords\": [\"inflect\", \"activerecord\", \"rails\", \"activesupport\", \"string\"],\n  \"version\": \"0.2.2\",\n  \"author\": \"Stefan Huber <MSNexploder@gmail.com>\",\n  \"homepage\": \"http://msnexploder.github.com/inflect/\",\n  \"main\": \"lib/inflect\",\n  \"files\": [\n    \"Cakefile\",\n    \"CHANGELOG.md\",\n    \"doc\",\n    \"lib\",\n    \"LICENSE\",\n    \"README.md\",\n    \"spec\",\n    \"src\"\n  ],\n  \"scripts\": {\n    \"test\": \"cake test\"\n  },\n  \"directories\": {\n    \"doc\":\"./doc\",\n    \"lib\":\"./lib\"\n  },\n  \"engines\": {\n    \"node\": \">=0.4\"\n  },\n  \"devDependencies\": {\n    \"coffee-script\": \"~1.2.0\",\n    \"docco\": \"~0.3.0\",\n    \"vows\": \"~0.6.2\",\n    \"browserify\": \"~1.10.4\",\n    \"fileify\": \"~0.3.1\",\n    \"uglify-js\": \"~1.2.6\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/MSNexploder/inflect.git\"\n  },\n  \"bugs\": { \"url\": \"https://github.com/MSNexploder/inflect/issues\" },\n  \"licenses\": [\n    { \"type\": \"MIT\",\n      \"url\": \"https://github.com/MSNexploder/inflect/raw/master/LICENSE\"\n    }\n  ]\n}"}
+require.define("__browserify_process",function(require,module,exports,__dirname,__filename,process,global){var process = module.exports = {};
+
+process.nextTick = (function () {
+    var canSetImmediate = typeof window !== 'undefined'
+        && window.setImmediate;
+    var canPost = typeof window !== 'undefined'
+        && window.postMessage && window.addEventListener
+    ;
+
+    if (canSetImmediate) {
+        return window.setImmediate;
+    }
+
+    if (canPost) {
+        var queue = [];
+        window.addEventListener('message', function (ev) {
+            if (ev.source === window && ev.data === 'browserify-tick') {
+                ev.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+
+        return function nextTick(fn) {
+            queue.push(fn);
+            window.postMessage('browserify-tick', '*');
+        };
+    }
+
+    return function nextTick(fn) {
+        setTimeout(fn, 0);
+    };
+})();
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+
+process.binding = function (name) {
+    if (name === 'evals') return (require)('vm')
+    else throw new Error('No such module. (Possibly not yet loaded)')
+};
+
+(function () {
+    var cwd = '/';
+    var path;
+    process.cwd = function () { return cwd };
+    process.chdir = function (dir) {
+        if (!path) path = require('path');
+        cwd = path.resolve(dir, cwd);
+    };
+})();
 
 });
 
-require.define("/inflect/index.coffee", function (require, module, exports, __dirname, __filename) {
-(function() {
-  var Inflections, inflections, methods, number_extensions, string_extensions, version;
-
-  version = require('./version');
-
-  exports.package = version.package;
-
-  exports.version = version.version;
+require.define("/inflect/index.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
+  var Inflections, inflections, methods, number_extensions, string_extensions;
 
   Inflections = require('./inflections').Inflections;
 
   inflections = function(callback) {
-    if (callback != null) callback.call(this, Inflections.instance());
+    if (callback != null) {
+      callback.call(this, Inflections.instance());
+    }
     return Inflections.instance();
   };
 
@@ -410,35 +450,9 @@ require.define("/inflect/index.coffee", function (require, module, exports, __di
 
 });
 
-require.define("/inflect/version.coffee", function (require, module, exports, __dirname, __filename) {
-(function() {
-  var data, path;
-
-  path = require('path');
-
-  if (process.title === 'browser') {
-    data = require('files')['package.json'];
-  } else {
-    data = require('fs').readFileSync(path.join(__dirname, '/../../package.json'));
-  }
-
-  exports.package = JSON.parse(data);
-
-  exports.version = exports.package.version;
-
-}).call(this);
-
-});
-
-require.define("fs", function (require, module, exports, __dirname, __filename) {
-// nothing to see here... no file methods for the browser
-
-});
-
-require.define("/inflect/inflections.coffee", function (require, module, exports, __dirname, __filename) {
-(function() {
-  var Inflections;
-  var __slice = Array.prototype.slice;
+require.define("/inflect/inflections.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
+  var Inflections,
+    __slice = [].slice;
 
   Inflections = (function() {
 
@@ -508,7 +522,9 @@ require.define("/inflect/inflections.coffee", function (require, module, exports
     };
 
     Inflections.prototype.clear = function(scope) {
-      if (scope == null) scope = 'all';
+      if (scope == null) {
+        scope = 'all';
+      }
       if (scope === 'all') {
         this.plurals = [];
         this.singulars = [];
@@ -529,15 +545,16 @@ require.define("/inflect/inflections.coffee", function (require, module, exports
 
 });
 
-require.define("/inflect/methods.coffee", function (require, module, exports, __dirname, __filename) {
-(function() {
-  var camelize, capitalize, decapitalize, dasherize, humanize, inflections, ordinalize, parameterize, pluralize, singularize, titleize, underscore;
+require.define("/inflect/methods.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
+  var camelize, capitalize, dasherize, decapitalize, humanize, inflections, ordinalize, parameterize, pluralize, singularize, titleize, underscore;
 
   inflections = require('../inflect').inflections;
 
   camelize = function(lower_case_and_underscored_word, first_letter_in_uppercase) {
     var rest;
-    if (first_letter_in_uppercase == null) first_letter_in_uppercase = true;
+    if (first_letter_in_uppercase == null) {
+      first_letter_in_uppercase = true;
+    }
     rest = lower_case_and_underscored_word.replace(/_./g, function(val) {
       return val.slice(1).toUpperCase();
     });
@@ -597,7 +614,7 @@ require.define("/inflect/methods.coffee", function (require, module, exports, __
   };
 
   singularize = function(word) {
-    var inflection, replacement, result, rule, singular, uncountable, _i, _j, _len, _len2, _ref, _ref2;
+    var inflection, replacement, result, rule, singular, uncountable, _i, _j, _len, _len1, _ref, _ref1;
     result = word.toString();
     uncountable = false;
     _ref = inflections().uncountables;
@@ -611,9 +628,9 @@ require.define("/inflect/methods.coffee", function (require, module, exports, __
     if (word.length === 0 || uncountable) {
       return result;
     } else {
-      _ref2 = inflections().singulars;
-      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-        singular = _ref2[_j];
+      _ref1 = inflections().singulars;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        singular = _ref1[_j];
         rule = singular[0];
         replacement = singular[1];
         if (result.search(rule) !== -1) {
@@ -662,7 +679,9 @@ require.define("/inflect/methods.coffee", function (require, module, exports, __
 
   parameterize = function(string, sep) {
     var parameterized_string;
-    if (sep == null) sep = '-';
+    if (sep == null) {
+      sep = '-';
+    }
     parameterized_string = string.toString();
     parameterized_string = parameterized_string.replace(/[^a-z0-9\-_]+/gi, sep);
     if (sep != null) {
@@ -698,8 +717,7 @@ require.define("/inflect/methods.coffee", function (require, module, exports, __
 
 });
 
-require.define("/inflect/string_extensions.coffee", function (require, module, exports, __dirname, __filename) {
-(function() {
+require.define("/inflect/string_extensions.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
   var enableStringExtensions, inflect;
 
   inflect = require('../inflect');
@@ -712,7 +730,9 @@ require.define("/inflect/string_extensions.coffee", function (require, module, e
       return inflect.singularize(this);
     };
     String.prototype.camelize = function(first_letter_in_uppercase) {
-      if (first_letter_in_uppercase == null) first_letter_in_uppercase = true;
+      if (first_letter_in_uppercase == null) {
+        first_letter_in_uppercase = true;
+      }
       return inflect.camelize(this, first_letter_in_uppercase);
     };
     String.prototype.capitalize = function() {
@@ -731,7 +751,9 @@ require.define("/inflect/string_extensions.coffee", function (require, module, e
       return inflect.dasherize(this);
     };
     String.prototype.parameterize = function(sep) {
-      if (sep == null) sep = '-';
+      if (sep == null) {
+        sep = '-';
+      }
       return inflect.parameterize(this, sep);
     };
     return String.prototype.humanize = function() {
@@ -745,8 +767,7 @@ require.define("/inflect/string_extensions.coffee", function (require, module, e
 
 });
 
-require.define("/inflect/number_extensions.coffee", function (require, module, exports, __dirname, __filename) {
-(function() {
+require.define("/inflect/number_extensions.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
   var enableNumberExtensions, inflect;
 
   inflect = require('../inflect');
@@ -763,8 +784,7 @@ require.define("/inflect/number_extensions.coffee", function (require, module, e
 
 });
 
-require.define("/inflect/default_inflections.coffee", function (require, module, exports, __dirname, __filename) {
-(function() {
+require.define("/inflect/default_inflections.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
   var inflect;
 
   inflect = require('../inflect');
@@ -846,11 +866,13 @@ require.define("/inflect/default_inflections.coffee", function (require, module,
 
 });
 
-require.define("/index.coffee", function (require, module, exports, __dirname, __filename) {
+require.define("/index.coffee",function(require,module,exports,__dirname,__filename,process,global){(function() {
 
   module.exports = require("./inflect");
+
+}).call(this);
 
 });
 require("/index.coffee");
 
-window.inflect = require('./inflect');
+window.inflect = require('./inflect');})();

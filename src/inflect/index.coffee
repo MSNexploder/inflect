@@ -1,8 +1,3 @@
-# version information
-version = require('./version')
-exports.package = version.package
-exports.version = version.version
-
 Inflections = require('./inflections').Inflections
 
 # Yields a singleton instance of Inflections so you can specify additional inflector rules.
