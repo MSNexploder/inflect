@@ -1,45 +1,179 @@
-<!DOCTYPE html>  <html> <head>   <title>index.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="default_inflections.html">                 default_inflections.coffee               </a>                                           <a class="source" href="index.html">                 index.coffee               </a>                                           <a class="source" href="inflections.html">                 inflections.coffee               </a>                                           <a class="source" href="methods.html">                 methods.coffee               </a>                                           <a class="source" href="number_extensions.html">                 number_extensions.coffee               </a>                                           <a class="source" href="string_extensions.html">                 string_extensions.coffee               </a>                                           <a class="source" href="version.html">                 version.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               index.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>version information</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">version = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./version&#39;</span><span class="p">)</span>
-<span class="nv">exports.package = </span><span class="nx">version</span><span class="p">.</span><span class="nx">package</span>
-<span class="nv">exports.version = </span><span class="nx">version</span><span class="p">.</span><span class="nx">version</span>
+<!DOCTYPE html>
 
-<span class="nv">Inflections = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./inflections&#39;</span><span class="p">).</span><span class="nx">Inflections</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Yields a singleton instance of Inflections so you can specify additional inflector rules.</p>
-
-<h3>Examples</h3>
-
+<html>
+<head>
+  <title>index.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="index.html">
+                  index.coffee
+                </a>
+              
+                
+                <a class="source" href="default_inflections.html">
+                  default_inflections.coffee
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.coffee
+                </a>
+              
+                
+                <a class="source" href="inflections.html">
+                  inflections.coffee
+                </a>
+              
+                
+                <a class="source" href="methods.html">
+                  methods.coffee
+                </a>
+              
+                
+                <a class="source" href="number_extensions.html">
+                  number_extensions.coffee
+                </a>
+              
+                
+                <a class="source" href="string_extensions.html">
+                  string_extensions.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Inflections = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./inflections'</span>).Inflections</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Yields a singleton instance of Inflections so you can specify additional inflector rules.</p>
+<h3 id="examples">Examples</h3>
 <pre><code>inflect.inflections (inflect) -&gt;
-  inflect.uncountable "rails"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">inflections = </span><span class="nf">(callback) -&gt;</span>
-    <span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">Inflections</span><span class="p">.</span><span class="nx">instance</span><span class="p">())</span> <span class="k">if</span> <span class="nx">callback</span><span class="o">?</span>
-    <span class="nx">Inflections</span><span class="p">.</span><span class="nx">instance</span><span class="p">()</span>
+  inflect.uncountable <span class="hljs-string">"rails"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">inflections</span> = <span class="hljs-params">(callback)</span> -&gt;</span>
+    callback.call(<span class="hljs-keyword">this</span>, Inflections.instance()) <span class="hljs-keyword">if</span> callback?
+    Inflections.instance()
 
-<span class="nv">exports.Inflections = </span><span class="nx">Inflections</span>
-<span class="nv">exports.inflections = </span><span class="nx">inflections</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>methods</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">methods = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./methods&#39;</span><span class="p">)</span>
-<span class="nv">exports.camelize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">camelize</span>
-<span class="nv">exports.underscore = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">underscore</span>
-<span class="nv">exports.dasherize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">dasherize</span>
-<span class="nv">exports.titleize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">titleize</span>
-<span class="nv">exports.capitalize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">capitalize</span>
-<span class="nv">exports.pluralize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">pluralize</span>
-<span class="nv">exports.singularize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">singularize</span>
-<span class="nv">exports.humanize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">humanize</span>
-<span class="nv">exports.ordinalize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">ordinalize</span>
-<span class="nv">exports.parameterize = </span><span class="nx">methods</span><span class="p">.</span><span class="nx">parameterize</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Base object extensions</p>
+exports.Inflections = Inflections
+exports.inflections = inflections</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>methods</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>methods = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./methods'</span>)
+exports.camelize = methods.camelize
+exports.underscore = methods.underscore
+exports.dasherize = methods.dasherize
+exports.titleize = methods.titleize
+exports.capitalize = methods.capitalize
+exports.decapitalize = methods.decapitalize
+exports.pluralize = methods.pluralize
+exports.singularize = methods.singularize
+exports.humanize = methods.humanize
+exports.ordinalize = methods.ordinalize
+exports.parameterize = methods.parameterize</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Base object extensions</p>
 <p>These methods can be used to extend the built-in String and Number classes
 with additional convenience methods.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-number">1.</span>ordinalize()          <span class="hljs-comment"># =&gt; "1st"</span>
+<span class="hljs-string">"post"</span>.pluralize()      <span class="hljs-comment"># =&gt; "posts"</span>
+</code></pre><p>They extend Base objects - so use with care and only enable them if you knwo what you are doing.</p>
 
-<h3>Examples</h3>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>string_extensions = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./string_extensions'</span>)
+number_extensions = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./number_extensions'</span>)
+exports.enableStringExtensions = string_extensions.enableStringExtensions
+exports.enableNumberExtensions = number_extensions.enableNumberExtensions
+exports.enableExtensions = <span class="hljs-function">-&gt;</span>
+    string_extensions.enableStringExtensions()
+    number_extensions.enableNumberExtensions()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>default inflections</p>
 
-<pre><code>1.ordinalize()          # =&gt; "1st"
-"post".pluralize()      # =&gt; "posts"
-</code></pre>
-
-<p>They extend Base objects - so use with care and only enable them if you knwo what you are doing.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">string_extensions = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./string_extensions&#39;</span><span class="p">)</span>
-<span class="nv">number_extensions = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./number_extensions&#39;</span><span class="p">)</span>
-<span class="nv">exports.enableStringExtensions = </span><span class="nx">string_extensions</span><span class="p">.</span><span class="nx">enableStringExtensions</span>
-<span class="nv">exports.enableNumberExtensions = </span><span class="nx">number_extensions</span><span class="p">.</span><span class="nx">enableNumberExtensions</span>
-<span class="nv">exports.enableExtensions = </span><span class="o">-&gt;</span>
-    <span class="nx">string_extensions</span><span class="p">.</span><span class="nx">enableStringExtensions</span><span class="p">()</span>
-    <span class="nx">number_extensions</span><span class="p">.</span><span class="nx">enableNumberExtensions</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>default inflections</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./default_inflections&#39;</span><span class="p">)</span>
-
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">require</span>(<span class="hljs-string">'./default_inflections'</span>)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,88 +1,293 @@
-<!DOCTYPE html>  <html> <head>   <title>string_extensions.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="default_inflections.html">                 default_inflections.coffee               </a>                                           <a class="source" href="index.html">                 index.coffee               </a>                                           <a class="source" href="inflections.html">                 inflections.coffee               </a>                                           <a class="source" href="methods.html">                 methods.coffee               </a>                                           <a class="source" href="number_extensions.html">                 number_extensions.coffee               </a>                                           <a class="source" href="string_extensions.html">                 string_extensions.coffee               </a>                                           <a class="source" href="version.html">                 version.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               string_extensions.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nv">inflect = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../inflect&#39;</span><span class="p">)</span>
+<!DOCTYPE html>
 
-<span class="nv">enableStringExtensions = </span><span class="o">-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Returns the plural form of the word in the string.</p>
-
-<h3>Examples</h3>
-
-<pre><code>"post".pluralize()             # =&gt; "posts"
-"octopus".pluralize()          # =&gt; "octopi"
-"sheep".pluralize()            # =&gt; "sheep"
-"words".pluralize()            # =&gt; "words"
-"CamelOctopus".pluralize()     # =&gt; "CamelOctopi"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">pluralize = </span><span class="o">-&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">pluralize</span><span class="p">(</span><span class="k">this</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>The reverse of <tt>pluralize</tt>, returns the singular form of a word in a string.</p>
-
-<h3>Examples</h3>
-
-<pre><code>"posts".singularize()            # =&gt; "post"
-"octopi".singularize()           # =&gt; "octopus"
-"sheep".singularize()            # =&gt; "sheep"
-"word".singularize()             # =&gt; "word"
-"CamelOctopi".singularize()      # =&gt; "CamelOctopus"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">singularize = </span><span class="o">-&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">singularize</span><span class="p">(</span><span class="k">this</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>By default, <tt>camelize</tt> converts strings to UpperCamelCase. If the argument to <tt>camelize</tt>
+<html>
+<head>
+  <title>string_extensions.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="index.html">
+                  index.coffee
+                </a>
+              
+                
+                <a class="source" href="default_inflections.html">
+                  default_inflections.coffee
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.coffee
+                </a>
+              
+                
+                <a class="source" href="inflections.html">
+                  inflections.coffee
+                </a>
+              
+                
+                <a class="source" href="methods.html">
+                  methods.coffee
+                </a>
+              
+                
+                <a class="source" href="number_extensions.html">
+                  number_extensions.coffee
+                </a>
+              
+                
+                <a class="source" href="string_extensions.html">
+                  string_extensions.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>string_extensions.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>inflect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../inflect'</span>)
+<span class="hljs-function">
+<span class="hljs-title">enableStringExtensions</span> = -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Returns the plural form of the word in the string.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">"post"</span>.pluralize()             <span class="hljs-comment"># =&gt; "posts"</span>
+<span class="hljs-string">"octopus"</span>.pluralize()          <span class="hljs-comment"># =&gt; "octopi"</span>
+<span class="hljs-string">"sheep"</span>.pluralize()            <span class="hljs-comment"># =&gt; "sheep"</span>
+<span class="hljs-string">"words"</span>.pluralize()            <span class="hljs-comment"># =&gt; "words"</span>
+<span class="hljs-string">"CamelOctopus"</span>.pluralize()     <span class="hljs-comment"># =&gt; "CamelOctopi"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::pluralize = <span class="hljs-function">-&gt;</span>
+        inflect.pluralize(<span class="hljs-keyword">this</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>The reverse of <tt>pluralize</tt>, returns the singular form of a word in a string.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">"posts"</span>.singularize()            <span class="hljs-comment"># =&gt; "post"</span>
+<span class="hljs-string">"octopi"</span>.singularize()           <span class="hljs-comment"># =&gt; "octopus"</span>
+<span class="hljs-string">"sheep"</span>.singularize()            <span class="hljs-comment"># =&gt; "sheep"</span>
+<span class="hljs-string">"word"</span>.singularize()             <span class="hljs-comment"># =&gt; "word"</span>
+<span class="hljs-string">"CamelOctopi"</span>.singularize()      <span class="hljs-comment"># =&gt; "CamelOctopus"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::singularize = <span class="hljs-function">-&gt;</span>
+        inflect.singularize(<span class="hljs-keyword">this</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>By default, <tt>camelize</tt> converts strings to UpperCamelCase. If the argument to <tt>camelize</tt>
 is set to <tt>false</tt> then <tt>camelize</tt> produces lowerCamelCase.</p>
-
-<h3>Examples</h3>
-
-<pre><code>"active_record".camelize()              # =&gt; "ActiveRecord"
-"active_record".camelize(false)         # =&gt; "activeRecord"
-</code></pre>
-
-<p>As a rule of thumb you can think of <tt>camelize</tt> as the inverse of <tt>underscore</tt>,
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">"active_record"</span>.camelize()              <span class="hljs-comment"># =&gt; "ActiveRecord"</span>
+<span class="hljs-string">"active_record"</span>.camelize(<span class="hljs-literal">false</span>)         <span class="hljs-comment"># =&gt; "activeRecord"</span>
+</code></pre><p>As a rule of thumb you can think of <tt>camelize</tt> as the inverse of <tt>underscore</tt>,
 though there are cases where that does not hold:</p>
-
-<pre><code>"SSLError".underscore().camelize() # =&gt; "SslError"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">camelize = </span><span class="nf">(first_letter_in_uppercase = true) -&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">camelize</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">first_letter_in_uppercase</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Converts the first character to uppercase and the remainder to lowercase.</p>
-
-<h3>Examples</h3>
-
-<pre><code>'über'.capitalize() # =&gt; "Über"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">capitalize = </span><span class="o">-&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">capitalize</span><span class="p">(</span><span class="k">this</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Capitalizes all the words and replaces some characters in the string to create
+<pre><code><span class="hljs-string">"SSLError"</span>.underscore().camelize() <span class="hljs-comment"># =&gt; "SslError"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::camelize = <span class="hljs-function"><span class="hljs-params">(first_letter_in_uppercase = <span class="hljs-literal">true</span>)</span> -&gt;</span>
+        inflect.camelize(<span class="hljs-keyword">this</span>, first_letter_in_uppercase)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Converts the first character to uppercase and the remainder to lowercase.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">'über'</span>.capitalize() <span class="hljs-comment"># =&gt; "Über"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::capitalize = <span class="hljs-function">-&gt;</span>
+        inflect.capitalize(<span class="hljs-keyword">this</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Converts the first character to lowercase and leaves the remainder intact.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">'über'</span>.capitalize() <span class="hljs-comment"># =&gt; "Über"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::decapitalize = <span class="hljs-function">-&gt;</span>
+        inflect.decapitalize(<span class="hljs-keyword">this</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Capitalizes all the words and replaces some characters in the string to create
 a nicer looking title. <tt>titleize</tt> is meant for creating pretty output.</p>
-
-<h3>Examples</h3>
-
-<pre><code>"man from the boondocks".titleize() # =&gt; "Man From The Boondocks"
-"x-men: the last stand".titleize()  # =&gt; "X Men: The Last Stand"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">titleize = </span><span class="o">-&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">titleize</span><span class="p">(</span><span class="k">this</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Makes an underscored, lowercase form from the expression in the string.</p>
-
-<h3>Examples</h3>
-
-<pre><code>"ActiveRecord".underscore()         # =&gt; "active_record"
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">"man from the boondocks"</span>.titleize() <span class="hljs-comment"># =&gt; "Man From The Boondocks"</span>
+<span class="hljs-string">"x-men: the last stand"</span>.titleize()  <span class="hljs-comment"># =&gt; "X Men: The Last Stand"</span>
 </code></pre>
-
-<p>As a rule of thumb you can think of <tt>underscore</tt> as the inverse of <tt>camelize</tt>,
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::titleize = <span class="hljs-function">-&gt;</span>
+        inflect.titleize(<span class="hljs-keyword">this</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Makes an underscored, lowercase form from the expression in the string.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">"ActiveRecord"</span>.underscore()         <span class="hljs-comment"># =&gt; "active_record"</span>
+</code></pre><p>As a rule of thumb you can think of <tt>underscore</tt> as the inverse of <tt>camelize</tt>,
 though there are cases where that does not hold:</p>
+<pre><code><span class="hljs-string">"SSLError"</span>.underscore().camelize() <span class="hljs-comment"># =&gt; "SslError"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::underscore = <span class="hljs-function">-&gt;</span>
+        inflect.underscore(<span class="hljs-keyword">this</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Replaces underscores with dashes in the string.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">"puni_puni"</span> <span class="hljs-comment"># =&gt; "puni-puni"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::dasherize = <span class="hljs-function">-&gt;</span>
+        inflect.dasherize(<span class="hljs-keyword">this</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Replaces special characters in a string so that it may be used as part of a ‘pretty’ URL.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">"Donald E. Knuth"</span>.parameterize()         <span class="hljs-comment"># =&gt; "donald-e-knuth"</span>
+<span class="hljs-string">"Donald E. Knuth"</span>.parameterize(<span class="hljs-string">'_'</span>)      <span class="hljs-comment"># =&gt; "donald_e_knuth"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::parameterize = <span class="hljs-function"><span class="hljs-params">(sep = <span class="hljs-string">'-'</span>)</span> -&gt;</span>
+        inflect.parameterize(<span class="hljs-keyword">this</span>, sep)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Capitalizes the first word and turns underscores into spaces and strips a
+trailing “_id”, if any. Like <tt>titleize</tt>, this is meant for creating pretty output.</p>
+<h3 id="examples">Examples</h3>
+<pre><code><span class="hljs-string">"employee_salary"</span> <span class="hljs-comment"># =&gt; "Employee salary"</span>
+<span class="hljs-string">"author_id"</span>       <span class="hljs-comment"># =&gt; "Author"</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    String::humanize = <span class="hljs-function">-&gt;</span>
+        inflect.humanize(<span class="hljs-keyword">this</span>)
 
-<pre><code>"SSLError".underscore().camelize() # =&gt; "SslError"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">underscore = </span><span class="o">-&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">underscore</span><span class="p">(</span><span class="k">this</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Replaces underscores with dashes in the string.</p>
-
-<h3>Examples</h3>
-
-<pre><code>"puni_puni" # =&gt; "puni-puni"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">dasherize = </span><span class="o">-&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">dasherize</span><span class="p">(</span><span class="k">this</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Replaces special characters in a string so that it may be used as part of a 'pretty' URL.</p>
-
-<h3>Examples</h3>
-
-<pre><code>"Donald E. Knuth".parameterize()         # =&gt; "donald-e-knuth"
-"Donald E. Knuth".parameterize('_')      # =&gt; "donald_e_knuth"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">parameterize = </span><span class="nf">(sep = &#39;-&#39;) -&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">parameterize</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">sep</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Capitalizes the first word and turns underscores into spaces and strips a
-trailing "_id", if any. Like <tt>titleize</tt>, this is meant for creating pretty output.</p>
-
-<h3>Examples</h3>
-
-<pre><code>"employee_salary" # =&gt; "Employee salary"
-"author_id"       # =&gt; "Author"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">String</span><span class="o">::</span><span class="nv">humanize = </span><span class="o">-&gt;</span>
-        <span class="nx">inflect</span><span class="p">.</span><span class="nx">humanize</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
-
-<span class="nv">exports.enableStringExtensions = </span><span class="nx">enableStringExtensions</span>
-
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+exports.enableStringExtensions = enableStringExtensions</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
