@@ -51,36 +51,41 @@ task "install", "Install inflect in your local repository", ->
 
 build = (callback) ->
   log "Compiling CoffeeScript to JavaScript ...", green
-  exec "rm -rf lib && coffee -c -l -b -o lib src", ->
+  exec "rm -rf lib && coffee -c -b -o lib src", ->
     log "Building client side script ...", green
-    data_plain = "window.inflect = require('./inflect');"
-    buildClient 'inflect', data_plain, callback
+    buildClient 'inflect', callback
 task "build", "Compile CoffeeScript to JavaScript", -> build onerror
 
 task "watch", "Continously compile CoffeeScript to JavaScript", ->
-  cmd = spawn("coffee", ["-c", "-l", "-b", "-w", "-o", "lib", "src"])
+  cmd = spawn("coffee", ["-c", "-b", "-w", "-o", "lib", "src"])
   cmd.stdout.on "data", (data) -> process.stdout.write green + data + reset
   cmd.on "error", onerror
 
-buildClient = (name, data, callback) ->
+buildClient = (name, callback) ->
   browserify = require('browserify')
-  jsp = require("uglify-js").parser
-  pro = require("uglify-js").uglify
+  coffeeify = require('coffeeify')
+  UglifyJS = require('uglify-js')
 
-  b = browserify()
-  b.addEntry path.join(__dirname, 'src/index.coffee')
-  b.append data
+  b = browserify({"extensions": [".coffee"], "standalone": "inflect"})
+  b.transform coffeeify
+  b.add path.join(__dirname, 'src/index.coffee')
 
-  fs.writeFile "client/#{name}.js", b.bundle(), ->
-    ast = jsp.parse b.bundle()
-    ast = pro.ast_mangle ast
-    ast = pro.ast_squeeze ast
+  b.bundle (err, result) ->
+    onerror err
+    fs.writeFile "client/#{name}.js", result, ->
+      min_result = UglifyJS.minify "client/#{name}.js"
+      fs.writeFile "client/#{name}.min.js", min_result.code, callback
 
-    fs.writeFile "client/#{name}.min.js", pro.gen_code(ast), callback
-
+documentSource = (callback) ->
+  log "Documenting source files ...", green
+  exec "docco src/index.coffee src/inflect/*.coffee", (err, stdout, stderr) ->
+    log stdout, green
+    onerror err
+    callback()
+task "doc:source", "Generate documentation from source files", -> documentSource onerror
 
 clean = (callback) ->
-  exec "rm -rf html lib docs", callback
+  exec "rm -rf lib docs", callback
 task "clean", "Remove temporary files and such", -> clean onerror
 
 
@@ -102,80 +107,6 @@ task "test:client", "Run client tests", ->
     log "Opening client tests in browser ...", green
     exec "open spec/client/index.html"
 
-
-## Documentation ##
-
-# Markdown to HTML.
-#toHTML = (source, callback) ->
-#  target = "html/#{path.basename(source, ".md").toLowerCase()}.html"
-#  fs.readFile "doc/layout/main.html", "utf8", (err, layout) ->
-#    onerror err
-#    fs.readFile source, "utf8", (err, text) ->
-#      onerror err
-#      log "Creating #{target}", green
-#      exec "ronn --html #{source}", (err, stdout, stderr) ->
-#        onerror err
-#        [name, title] = stdout.match(/<h1>(.*)<\/h1>/)[1].split(" -- ")
-#        name = name.replace(/\(\d\)/, "")
-#        body = stdout.replace(/<h1>.*<\/h1>/, "")
-#        html = layout.replace("{{body}}", body).replace(/{{title}}/g, title)
-#        fs.writeFile target, html, "utf8", (err) ->
-#          callback err, target
-
-#documentPages = (callback) ->
-#  files = fs.readdirSync(".").filter((file) -> path.extname(file) == ".md").
-#    concat(fs.readdirSync("doc").filter((file) -> path.extname(file) == ".md").map((file) -> "doc/#{file}"))
-#  fs.mkdir "html", 0777, ->
-#    convert = ->
-#      if file = files.pop()
-#        toHTML file, (err) ->
-#          onerror err
-#          convert()
-#      else
-#        process.stdout.write "\n"
-#        fs.readFile "html/readme.html", "utf8", (err, html) ->
-#          html = html.replace(/<h1>(.*)<\/h1>/, "<h1>inflect.js</h1><b>$1</b>")
-#          fs.writeFile "html/index.html", html, "utf8", onerror
-#          fs.unlink "html/readme.html", onerror
-#          exec "cp -fr doc/css doc/images html/", callback
-#    convert()
-
-documentSource = (callback) ->
-  log "Documenting source files ...", green
-  exec "docco src/inflect/*.coffee", (err, stdout, stderr) ->
-    log stdout, green
-    onerror err
-    callback()
-    #log "Copying to html/source", green
-    #exec "mkdir -p html && cp -rf docs/ html/source && rm -rf docs", callback
-
-generateDocs = (callback) ->
-  log "Generating documentation ...", green
-  #documentPages (err) ->
-  #  onerror err
-  #  documentSource callback
-  documentSource callback
-
-#task "doc:pages",  "Generate documentation for main pages",    -> documentPages onerror
-task "doc:source", "Generate documentation from source files", -> documentSource onerror
-task "doc",        "Generate all documentation",               -> generateDocs onerror
-
-## Publishing ##
-
-#publishDocs = (callback) ->
-#  log "Uploading documentation ...", green
-#  exec "rsync -chr --del --stats html/ labnotes.org:/var/www/zombie/", (err, stdout, stderr) ->
-#    log stdout, green
-#    callback err
-#task "doc:publish", "Publish documentation to site", ->
-#  documentPages (err) ->
-#    onerror err
-#    documentSource (err) ->
-#      onerror err
-#      generatePDF (err) ->
-#        onerror err
-#        publishDocs onerror
-
 task "publish", "Publish new version (Git, NPM, site)", ->
   # Run tests, don't publish unless tests pass.
   runTests (err) ->
@@ -193,9 +124,7 @@ task "publish", "Publish new version (Git, NPM, site)", ->
 
             # Publish documentation, need these first to generate man pages,
             # inclusion on NPM package.
-            generateDocs (err) ->
-              onerror err
-
+            documentSource (err) ->
               log "Publishing to NPM ...", green
               exec "npm publish", (err, stdout, stderr) ->
                 log stdout, green
@@ -207,6 +136,3 @@ task "publish", "Publish new version (Git, NPM, site)", ->
                   log stdout, green
                   exec "git push --tags origin master", (err, stdout, stderr) ->
                     log stdout, green
-
-            # We can do this in parallel.
-            #publishDocs onerror
