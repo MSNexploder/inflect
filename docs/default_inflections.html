@@ -1,78 +1,164 @@
-<!DOCTYPE html>  <html> <head>   <title>default_inflections.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="default_inflections.html">                 default_inflections.coffee               </a>                                           <a class="source" href="index.html">                 index.coffee               </a>                                           <a class="source" href="inflections.html">                 inflections.coffee               </a>                                           <a class="source" href="methods.html">                 methods.coffee               </a>                                           <a class="source" href="number_extensions.html">                 number_extensions.coffee               </a>                                           <a class="source" href="string_extensions.html">                 string_extensions.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               default_inflections.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>default inflections</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">inflect = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;../inflect&#39;</span><span class="p">)</span>
+<!DOCTYPE html>
 
-<span class="nx">inflect</span><span class="p">.</span><span class="nx">inflections</span> <span class="nf">(inflect) -&gt;</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/$/</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/s$/i</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(ax|test)is$/i</span><span class="p">,</span> <span class="s">&#39;$1es&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(octop|vir)us$/i</span><span class="p">,</span> <span class="s">&#39;$1i&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(octop|vir)i$/i</span><span class="p">,</span> <span class="s">&#39;$1i&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(alias|status)$/i</span><span class="p">,</span> <span class="s">&#39;$1es&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(bu)s$/i</span><span class="p">,</span> <span class="s">&#39;$1ses&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(buffal|tomat)o$/i</span><span class="p">,</span> <span class="s">&#39;$1oes&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/([ti])um$/i</span><span class="p">,</span> <span class="s">&#39;$1a&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/([ti])a$/i</span><span class="p">,</span> <span class="s">&#39;$1a&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/sis$/i</span><span class="p">,</span> <span class="s">&#39;ses&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(?:([^f])fe|([lr])f)$/i</span><span class="p">,</span> <span class="s">&#39;$1$2ves&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(hive)$/i</span><span class="p">,</span> <span class="s">&#39;$1s&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/([^aeiouy]|qu)y$/i</span><span class="p">,</span> <span class="s">&#39;$1ies&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(x|ch|ss|sh)$/i</span><span class="p">,</span> <span class="s">&#39;$1es&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(matr|vert|ind)(?:ix|ex)$/i</span><span class="p">,</span> <span class="s">&#39;$1ices&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/([m|l])ouse$/i</span><span class="p">,</span> <span class="s">&#39;$1ice&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/([m|l])ice$/i</span><span class="p">,</span> <span class="s">&#39;$1ice&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/^(ox)$/i</span><span class="p">,</span> <span class="s">&#39;$1en&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/^(oxen)$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">plural</span><span class="p">(</span><span class="sr">/(quiz)$/i</span><span class="p">,</span> <span class="s">&#39;$1zes&#39;</span><span class="p">)</span>
+<html>
+<head>
+  <title>default_inflections.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="index.html">
+                  index.coffee
+                </a>
+              
+                
+                <a class="source" href="default_inflections.html">
+                  default_inflections.coffee
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.coffee
+                </a>
+              
+                
+                <a class="source" href="inflections.html">
+                  inflections.coffee
+                </a>
+              
+                
+                <a class="source" href="methods.html">
+                  methods.coffee
+                </a>
+              
+                
+                <a class="source" href="number_extensions.html">
+                  number_extensions.coffee
+                </a>
+              
+                
+                <a class="source" href="string_extensions.html">
+                  string_extensions.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>default_inflections.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>default inflections</p>
 
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/s$/i</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(n)ews$/i</span><span class="p">,</span> <span class="s">&#39;$1ews&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/([ti])a$/i</span><span class="p">,</span> <span class="s">&#39;$1um&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i</span><span class="p">,</span> <span class="s">&#39;$1$2sis&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(^analy)ses$/i</span><span class="p">,</span> <span class="s">&#39;$1sis&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/([^f])ves$/i</span><span class="p">,</span> <span class="s">&#39;$1fe&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(hive)s$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(tive)s$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/([lr])ves$/i</span><span class="p">,</span> <span class="s">&#39;$1f&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/([^aeiouy]|qu)ies$/i</span><span class="p">,</span> <span class="s">&#39;$1y&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(s)eries$/i</span><span class="p">,</span> <span class="s">&#39;$1eries&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(m)ovies$/i</span><span class="p">,</span> <span class="s">&#39;$1ovie&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(x|ch|ss|sh)es$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/([m|l])ice$/i</span><span class="p">,</span> <span class="s">&#39;$1ouse&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(bus)es$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(o)es$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(shoe)s$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(cris|ax|test)es$/i</span><span class="p">,</span> <span class="s">&#39;$1is&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(octop|vir)i$/i</span><span class="p">,</span> <span class="s">&#39;$1us&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(alias|status)es$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/^(ox)en/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(vert|ind)ices$/i</span><span class="p">,</span> <span class="s">&#39;$1ex&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(matr)ices$/i</span><span class="p">,</span> <span class="s">&#39;$1ix&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(quiz)zes$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">singular</span><span class="p">(</span><span class="sr">/(database)s$/i</span><span class="p">,</span> <span class="s">&#39;$1&#39;</span><span class="p">)</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>inflect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../inflect'</span>)
 
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;person&#39;</span><span class="p">,</span> <span class="s">&#39;people&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;man&#39;</span><span class="p">,</span> <span class="s">&#39;men&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;child&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;move&#39;</span><span class="p">,</span> <span class="s">&#39;moves&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;she&#39;</span><span class="p">,</span> <span class="s">&#39;they&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;he&#39;</span><span class="p">,</span> <span class="s">&#39;they&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;myself&#39;</span><span class="p">,</span> <span class="s">&#39;ourselves&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;yourself&#39;</span><span class="p">,</span> <span class="s">&#39;ourselves&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;himself&#39;</span><span class="p">,</span> <span class="s">&#39;themselves&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;herself&#39;</span><span class="p">,</span> <span class="s">&#39;themselves&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;themself&#39;</span><span class="p">,</span> <span class="s">&#39;themselves&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;mine&#39;</span><span class="p">,</span> <span class="s">&#39;ours&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;hers&#39;</span><span class="p">,</span> <span class="s">&#39;theirs&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;his&#39;</span><span class="p">,</span> <span class="s">&#39;theirs&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;its&#39;</span><span class="p">,</span> <span class="s">&#39;theirs&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;theirs&#39;</span><span class="p">,</span> <span class="s">&#39;theirs&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;sex&#39;</span><span class="p">,</span> <span class="s">&#39;sexes&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;cow&#39;</span><span class="p">,</span> <span class="s">&#39;kine&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">irregular</span><span class="p">(</span><span class="s">&#39;zombie&#39;</span><span class="p">,</span> <span class="s">&#39;zombies&#39;</span><span class="p">)</span>
+inflect.inflections (inflect) -&gt;
+    inflect.plural(<span class="hljs-regexp">/$/</span>, <span class="hljs-string">'s'</span>)
+    inflect.plural(<span class="hljs-regexp">/s$/i</span>, <span class="hljs-string">'s'</span>)
+    inflect.plural(<span class="hljs-regexp">/(ax|test)is$/i</span>, <span class="hljs-string">'$1es'</span>)
+    inflect.plural(<span class="hljs-regexp">/(octop|vir)us$/i</span>, <span class="hljs-string">'$1i'</span>)
+    inflect.plural(<span class="hljs-regexp">/(octop|vir)i$/i</span>, <span class="hljs-string">'$1i'</span>)
+    inflect.plural(<span class="hljs-regexp">/(alias|status)$/i</span>, <span class="hljs-string">'$1es'</span>)
+    inflect.plural(<span class="hljs-regexp">/(bu)s$/i</span>, <span class="hljs-string">'$1ses'</span>)
+    inflect.plural(<span class="hljs-regexp">/(buffal|tomat)o$/i</span>, <span class="hljs-string">'$1oes'</span>)
+    inflect.plural(<span class="hljs-regexp">/([ti])um$/i</span>, <span class="hljs-string">'$1a'</span>)
+    inflect.plural(<span class="hljs-regexp">/([ti])a$/i</span>, <span class="hljs-string">'$1a'</span>)
+    inflect.plural(<span class="hljs-regexp">/sis$/i</span>, <span class="hljs-string">'ses'</span>)
+    inflect.plural(<span class="hljs-regexp">/(?:([^f])fe|([lr])f)$/i</span>, <span class="hljs-string">'$1$2ves'</span>)
+    inflect.plural(<span class="hljs-regexp">/(hive)$/i</span>, <span class="hljs-string">'$1s'</span>)
+    inflect.plural(<span class="hljs-regexp">/([^aeiouy]|qu)y$/i</span>, <span class="hljs-string">'$1ies'</span>)
+    inflect.plural(<span class="hljs-regexp">/(x|ch|ss|sh)$/i</span>, <span class="hljs-string">'$1es'</span>)
+    inflect.plural(<span class="hljs-regexp">/(matr|vert|ind)(?:ix|ex)$/i</span>, <span class="hljs-string">'$1ices'</span>)
+    inflect.plural(<span class="hljs-regexp">/([m|l])ouse$/i</span>, <span class="hljs-string">'$1ice'</span>)
+    inflect.plural(<span class="hljs-regexp">/([m|l])ice$/i</span>, <span class="hljs-string">'$1ice'</span>)
+    inflect.plural(<span class="hljs-regexp">/^(ox)$/i</span>, <span class="hljs-string">'$1en'</span>)
+    inflect.plural(<span class="hljs-regexp">/^(oxen)$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.plural(<span class="hljs-regexp">/(quiz)$/i</span>, <span class="hljs-string">'$1zes'</span>)
 
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">uncountable</span><span class="p">(</span><span class="s">&#39;advice&#39;</span><span class="p">,</span> <span class="s">&#39;energy&#39;</span><span class="p">,</span> <span class="s">&#39;excretion&#39;</span><span class="p">,</span> <span class="s">&#39;digestion&#39;</span><span class="p">,</span> <span class="s">&#39;cooperation&#39;</span><span class="p">,</span> <span class="s">&#39;health&#39;</span><span class="p">,</span> <span class="s">&#39;justice&#39;</span><span class="p">,</span> <span class="s">&#39;jeans&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">uncountable</span><span class="p">(</span><span class="s">&#39;labour&#39;</span><span class="p">,</span> <span class="s">&#39;machinery&#39;</span><span class="p">,</span> <span class="s">&#39;equipment&#39;</span><span class="p">,</span> <span class="s">&#39;information&#39;</span><span class="p">,</span> <span class="s">&#39;pollution&#39;</span><span class="p">,</span> <span class="s">&#39;sewage&#39;</span><span class="p">,</span> <span class="s">&#39;paper&#39;</span><span class="p">,</span> <span class="s">&#39;money&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">uncountable</span><span class="p">(</span><span class="s">&#39;species&#39;</span><span class="p">,</span> <span class="s">&#39;series&#39;</span><span class="p">,</span> <span class="s">&#39;rain&#39;</span><span class="p">,</span> <span class="s">&#39;rice&#39;</span><span class="p">,</span> <span class="s">&#39;fish&#39;</span><span class="p">,</span> <span class="s">&#39;sheep&#39;</span><span class="p">,</span> <span class="s">&#39;moose&#39;</span><span class="p">,</span> <span class="s">&#39;deer&#39;</span><span class="p">,</span> <span class="s">&#39;bison&#39;</span><span class="p">,</span> <span class="s">&#39;proceedings&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">uncountable</span><span class="p">(</span><span class="s">&#39;shears&#39;</span><span class="p">,</span> <span class="s">&#39;pincers&#39;</span><span class="p">,</span> <span class="s">&#39;breeches&#39;</span><span class="p">,</span> <span class="s">&#39;hijinks&#39;</span><span class="p">,</span> <span class="s">&#39;clippers&#39;</span><span class="p">,</span> <span class="s">&#39;chassis&#39;</span><span class="p">,</span> <span class="s">&#39;innings&#39;</span><span class="p">,</span> <span class="s">&#39;elk&#39;</span><span class="p">)</span>
-    <span class="nx">inflect</span><span class="p">.</span><span class="nx">uncountable</span><span class="p">(</span><span class="s">&#39;rhinoceros&#39;</span><span class="p">,</span> <span class="s">&#39;swine&#39;</span><span class="p">,</span> <span class="s">&#39;you&#39;</span><span class="p">,</span> <span class="s">&#39;news&#39;</span><span class="p">)</span>
+    inflect.singular(<span class="hljs-regexp">/s$/i</span>, <span class="hljs-string">''</span>)
+    inflect.singular(<span class="hljs-regexp">/(n)ews$/i</span>, <span class="hljs-string">'$1ews'</span>)
+    inflect.singular(<span class="hljs-regexp">/([ti])a$/i</span>, <span class="hljs-string">'$1um'</span>)
+    inflect.singular(<span class="hljs-regexp">/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i</span>, <span class="hljs-string">'$1$2sis'</span>)
+    inflect.singular(<span class="hljs-regexp">/(^analy)ses$/i</span>, <span class="hljs-string">'$1sis'</span>)
+    inflect.singular(<span class="hljs-regexp">/([^f])ves$/i</span>, <span class="hljs-string">'$1fe'</span>)
+    inflect.singular(<span class="hljs-regexp">/(hive)s$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/(tive)s$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/([lr])ves$/i</span>, <span class="hljs-string">'$1f'</span>)
+    inflect.singular(<span class="hljs-regexp">/([^aeiouy]|qu)ies$/i</span>, <span class="hljs-string">'$1y'</span>)
+    inflect.singular(<span class="hljs-regexp">/(s)eries$/i</span>, <span class="hljs-string">'$1eries'</span>)
+    inflect.singular(<span class="hljs-regexp">/(m)ovies$/i</span>, <span class="hljs-string">'$1ovie'</span>)
+    inflect.singular(<span class="hljs-regexp">/(x|ch|ss|sh)es$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/([m|l])ice$/i</span>, <span class="hljs-string">'$1ouse'</span>)
+    inflect.singular(<span class="hljs-regexp">/(bus)es$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/(o)es$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/(shoe)s$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/(cris|ax|test)es$/i</span>, <span class="hljs-string">'$1is'</span>)
+    inflect.singular(<span class="hljs-regexp">/(octop|vir)i$/i</span>, <span class="hljs-string">'$1us'</span>)
+    inflect.singular(<span class="hljs-regexp">/(alias|status)es$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/^(ox)en/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/(vert|ind)ices$/i</span>, <span class="hljs-string">'$1ex'</span>)
+    inflect.singular(<span class="hljs-regexp">/(matr)ices$/i</span>, <span class="hljs-string">'$1ix'</span>)
+    inflect.singular(<span class="hljs-regexp">/(quiz)zes$/i</span>, <span class="hljs-string">'$1'</span>)
+    inflect.singular(<span class="hljs-regexp">/(database)s$/i</span>, <span class="hljs-string">'$1'</span>)
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+    inflect.irregular(<span class="hljs-string">'person'</span>, <span class="hljs-string">'people'</span>)
+    inflect.irregular(<span class="hljs-string">'man'</span>, <span class="hljs-string">'men'</span>)
+    inflect.irregular(<span class="hljs-string">'child'</span>, <span class="hljs-string">'children'</span>)
+    inflect.irregular(<span class="hljs-string">'move'</span>, <span class="hljs-string">'moves'</span>)
+    inflect.irregular(<span class="hljs-string">'she'</span>, <span class="hljs-string">'they'</span>)
+    inflect.irregular(<span class="hljs-string">'he'</span>, <span class="hljs-string">'they'</span>)
+    inflect.irregular(<span class="hljs-string">'myself'</span>, <span class="hljs-string">'ourselves'</span>)
+    inflect.irregular(<span class="hljs-string">'yourself'</span>, <span class="hljs-string">'ourselves'</span>)
+    inflect.irregular(<span class="hljs-string">'himself'</span>, <span class="hljs-string">'themselves'</span>)
+    inflect.irregular(<span class="hljs-string">'herself'</span>, <span class="hljs-string">'themselves'</span>)
+    inflect.irregular(<span class="hljs-string">'themself'</span>, <span class="hljs-string">'themselves'</span>)
+    inflect.irregular(<span class="hljs-string">'mine'</span>, <span class="hljs-string">'ours'</span>)
+    inflect.irregular(<span class="hljs-string">'hers'</span>, <span class="hljs-string">'theirs'</span>)
+    inflect.irregular(<span class="hljs-string">'his'</span>, <span class="hljs-string">'theirs'</span>)
+    inflect.irregular(<span class="hljs-string">'its'</span>, <span class="hljs-string">'theirs'</span>)
+    inflect.irregular(<span class="hljs-string">'theirs'</span>, <span class="hljs-string">'theirs'</span>)
+    inflect.irregular(<span class="hljs-string">'sex'</span>, <span class="hljs-string">'sexes'</span>)
+    inflect.irregular(<span class="hljs-string">'cow'</span>, <span class="hljs-string">'kine'</span>)
+    inflect.irregular(<span class="hljs-string">'zombie'</span>, <span class="hljs-string">'zombies'</span>)
+
+    inflect.uncountable(<span class="hljs-string">'advice'</span>, <span class="hljs-string">'energy'</span>, <span class="hljs-string">'excretion'</span>, <span class="hljs-string">'digestion'</span>, <span class="hljs-string">'cooperation'</span>, <span class="hljs-string">'health'</span>, <span class="hljs-string">'justice'</span>, <span class="hljs-string">'jeans'</span>)
+    inflect.uncountable(<span class="hljs-string">'labour'</span>, <span class="hljs-string">'machinery'</span>, <span class="hljs-string">'equipment'</span>, <span class="hljs-string">'information'</span>, <span class="hljs-string">'pollution'</span>, <span class="hljs-string">'sewage'</span>, <span class="hljs-string">'paper'</span>, <span class="hljs-string">'money'</span>)
+    inflect.uncountable(<span class="hljs-string">'species'</span>, <span class="hljs-string">'series'</span>, <span class="hljs-string">'rain'</span>, <span class="hljs-string">'rice'</span>, <span class="hljs-string">'fish'</span>, <span class="hljs-string">'sheep'</span>, <span class="hljs-string">'moose'</span>, <span class="hljs-string">'deer'</span>, <span class="hljs-string">'bison'</span>, <span class="hljs-string">'proceedings'</span>)
+    inflect.uncountable(<span class="hljs-string">'shears'</span>, <span class="hljs-string">'pincers'</span>, <span class="hljs-string">'breeches'</span>, <span class="hljs-string">'hijinks'</span>, <span class="hljs-string">'clippers'</span>, <span class="hljs-string">'chassis'</span>, <span class="hljs-string">'innings'</span>, <span class="hljs-string">'elk'</span>)
+    inflect.uncountable(<span class="hljs-string">'rhinoceros'</span>, <span class="hljs-string">'swine'</span>, <span class="hljs-string">'you'</span>, <span class="hljs-string">'news'</span>)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
