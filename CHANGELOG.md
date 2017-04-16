@@ -1,3 +1,9 @@
+## 0.4.0 (14th April, 2017)
+
+  * fixed various default inflection bugs
+  * updated to latest node
+  * updated dependencies
+
 ## 0.3.0 (20th September, 2012)
 
   * added inflect.decapitalize (thanks to ikr)
