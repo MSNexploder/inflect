@@ -44,6 +44,7 @@ test_data = {
     "medium"      : "media",
     "stadium"     : "stadia",
     "analysis"    : "analyses",
+    "my_analysis" : "my_analyses",
 
     "node_child"  : "node_children",
     "child"       : "children",
@@ -90,6 +91,7 @@ test_data = {
     "matrix_fu"   : "matrix_fus",
 
     "axis"        : "axes",
+    "taxi"        : "taxis",
     "testis"      : "testes",
     "crisis"      : "crises",
 
@@ -100,7 +102,6 @@ test_data = {
     "prize"       : "prizes",
     "edge"        : "edges",
 
-    "cow"         : "kine",
     "database"    : "databases"
   }
 

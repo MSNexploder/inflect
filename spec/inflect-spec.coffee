@@ -60,6 +60,11 @@ vows.describe('Inflect').addBatch(
             assert.equal(inflect.singularize(plural), singular)
             assert.equal(inflect.singularize(inflect.capitalize(plural)), inflect.capitalize(singular))
 
+    'singularize singular': ->
+        for singular, plural of inflect_test_cases.singular_to_plural
+            assert.equal(inflect.singularize(singular), singular)
+            assert.equal(inflect.singularize(inflect.capitalize(singular)), inflect.capitalize(singular))
+
     'titleize': ->
         for before, titleized of inflect_test_cases.mixture_to_title_case
             assert.equal(inflect.titleize(before), titleized)
