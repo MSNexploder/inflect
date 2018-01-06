@@ -34,11 +34,11 @@
     "node": ">=6.9.0"
   },
   "devDependencies": {
-    "browserify": "~14.3.0",
-    "coffee-script": "~1.12.5",
-    "coffeeify": "^2.1.0",
-    "docco": "~0.7.0",
-    "uglify-js": "~2.8.22",
+    "browserify": "~15.0.0",
+    "coffee-script": "~1.12.7",
+    "coffeeify": "~2.1.0",
+    "docco": "~0.8.0",
+    "uglify-js": "~3.3.4",
     "vows": "~0.8.1"
   },
   "repository": {
