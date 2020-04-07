@@ -8,9 +8,9 @@
     "activesupport",
     "string"
   ],
-  "version": "0.4.0",
+  "version": "0.4.1",
   "license": "MIT",
-  "author": "Stefan Huber <MSNexploder@gmail.com>",
+  "author": "Stefan Stüben <MSNexploder@gmail.com>",
   "homepage": "http://msnexploder.github.com/inflect/",
   "main": "lib/inflect",
   "files": [
