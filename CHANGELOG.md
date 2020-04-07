@@ -1,3 +1,8 @@
+## 0.4.1 (7th April, 2020)
+
+  * updated to latest node
+  * updated dependencies
+
 ## 0.4.0 (14th April, 2017)
 
   * fixed various default inflection bugs
