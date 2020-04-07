@@ -73,7 +73,7 @@ buildClient = (name, callback) ->
   b.bundle (err, result) ->
     onerror err
     fs.writeFile "client/#{name}.js", result, ->
-      min_result = UglifyJS.minify "client/#{name}.js"
+      min_result = UglifyJS.minify result.toString()
       fs.writeFile "client/#{name}.min.js", min_result.code, callback
 
 documentSource = (callback) ->
