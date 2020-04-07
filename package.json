@@ -24,6 +24,7 @@
     "src"
   ],
   "scripts": {
+    "build": "cake build",
     "test": "cake test"
   },
   "directories": {
@@ -31,15 +32,16 @@
     "lib": "./lib"
   },
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=10.19.0"
   },
   "devDependencies": {
-    "browserify": "~15.0.0",
+    "browserify": "~16.5.1",
+    "cake": "^0.1.1",
     "coffee-script": "~1.12.7",
     "coffeeify": "~2.1.0",
     "docco": "~0.8.0",
-    "uglify-js": "~3.3.4",
-    "vows": "~0.8.1"
+    "uglify-js": "^3.8.1",
+    "vows": "^0.8.3"
   },
   "repository": {
     "type": "git",
