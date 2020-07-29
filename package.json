@@ -21,7 +21,8 @@
     "LICENSE",
     "README.md",
     "spec",
-    "src"
+    "src",
+    "client"
   ],
   "scripts": {
     "build": "cake build",
