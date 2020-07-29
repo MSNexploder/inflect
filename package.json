@@ -22,7 +22,7 @@
     "README.md",
     "spec",
     "src",
-    "client",
+    "client"
   ],
   "scripts": {
     "build": "cake build",
