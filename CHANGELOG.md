@@ -1,3 +1,8 @@
+## 0.5.0 (29th July, 2020)
+
+  * include client builds in npm build (thanks to pecord)
+  * updated dependencies
+
 ## 0.4.1 (7th April, 2020)
 
   * updated to latest node

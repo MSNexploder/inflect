@@ -8,7 +8,7 @@
     "activesupport",
     "string"
   ],
-  "version": "0.4.1",
+  "version": "0.5.0",
   "license": "MIT",
   "author": "Stefan Stüben <MSNexploder@gmail.com>",
   "homepage": "http://msnexploder.github.com/inflect/",
