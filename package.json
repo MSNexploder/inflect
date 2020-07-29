@@ -41,7 +41,7 @@
     "coffee-script": "~1.12.7",
     "coffeeify": "~2.1.0",
     "docco": "~0.8.0",
-    "uglify-js": "^3.8.1",
+    "uglify-js": "^3.10.0",
     "vows": "^0.8.3"
   },
   "repository": {
